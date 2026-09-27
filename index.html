@@ -1,21 +1,1764 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Assis Autopeças e Serviços</title><style>
-:root{color-scheme:light dark;--bg:light-dark(#f5f7f9,#0b0f13);--surface:light-dark(#fff,#121820);--surface2:light-dark(#eef2f5,#18212b);--text:light-dark(#111827,#f5f7fa);--muted:light-dark(#64748b,#9aa8b6);--line:light-dark(#dbe2e8,#263442);--accent:#e53935;--dark:#111827}*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}#app{min-height:100vh;background:var(--bg)}.top{background:#111827;color:#fff;text-align:center;padding:9px;font-size:13px}.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.navin{max-width:1180px;margin:auto;padding:17px 22px;display:flex;align-items:center;gap:28px}.logo{font-weight:900;font-size:21px}.logo span{color:var(--accent)}.links{display:flex;gap:22px;font-size:14px;font-weight:700;flex:1}.links a:hover{color:var(--accent)}button{border:0;cursor:pointer;font:inherit}.cart{background:var(--dark);color:#fff;border-radius:12px;padding:11px 15px;font-weight:800}.hero{max-width:1180px;margin:auto;padding:54px 22px 35px;display:grid;grid-template-columns:1.25fr .75fr;gap:28px}.heroMain{background:linear-gradient(135deg,#151b23,#293440);border-radius:24px;padding:48px;color:#fff;min-height:390px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.heroMain:after{content:'⚙';position:absolute;right:-30px;bottom:-70px;font-size:300px;opacity:.07}.eyebrow{color:#ffb000;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;font-size:12px}.hero h1{font-size:52px;line-height:1.02;letter-spacing:-2.5px;margin:12px 0}.hero p{color:#cbd5df;font-size:17px;max-width:570px;line-height:1.6}.actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}.primary{background:var(--accent);color:#fff;padding:14px 20px;border-radius:11px;font-weight:900}.secondary{background:#fff;color:#111827;padding:14px 20px;border-radius:11px;font-weight:900}.quote{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:30px;display:flex;flex-direction:column;justify-content:center}.quote h2{font-size:27px;margin:8px 0}.quote p{color:var(--muted);line-height:1.5}.quote button{background:#111827;color:#fff;padding:14px;border-radius:11px;font-weight:900;margin-top:10px}.section{max-width:1180px;margin:auto;padding:25px 22px 55px}.head{display:flex;align-items:end;justify-content:space-between;margin-bottom:20px}.head h2{font-size:30px;margin:0}.head p{color:var(--muted);margin:5px 0 0}.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.cat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;font-weight:900}.cat small{display:block;color:var(--muted);font-weight:500;margin-top:6px}.products{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.product{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}.pic{height:150px;background:linear-gradient(145deg,#e8edf1,#c9d1d8);display:grid;place-items:center;font-size:55px}.info{padding:17px}.tag{font-size:11px;color:var(--accent);font-weight:900;text-transform:uppercase}.product h3{font-size:16px;margin:7px 0}.price{font-size:21px;font-weight:900;margin:10px 0}.add{width:100%;background:#111827;color:#fff;padding:11px;border-radius:9px;font-weight:800}.services{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.service{background:var(--surface);border:1px solid var(--line);padding:22px;border-radius:16px}.service b{display:block;margin:10px 0 5px}.service span{color:var(--muted);font-size:13px;line-height:1.4}.budget{background:#151b23;color:#fff;border-radius:24px;padding:36px;display:grid;grid-template-columns:1fr 1fr;gap:35px}.budget p{color:#cbd5df;line-height:1.6}.budget button{background:var(--accent);color:#fff;padding:14px 18px;border-radius:10px;font-weight:900}.footer{border-top:1px solid var(--line);padding:30px 22px;color:var(--muted);text-align:center}.modal{position:fixed;inset:0;background:#0009;display:none;place-items:center;z-index:30;padding:18px}.modal.open{display:grid}.box{background:var(--surface);width:min(560px,100%);border-radius:20px;padding:25px;border:1px solid var(--line);max-height:90vh;overflow:auto}.boxhead{display:flex;justify-content:space-between;align-items:center}.close{background:var(--surface2);border-radius:9px;padding:7px 10px}.field{margin:14px 0}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:6px}.field input,.field textarea{width:100%;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--surface2);color:var(--text)}.field textarea{min-height:85px;resize:vertical}.send{width:100%;background:#25d366;color:#fff;padding:14px;border-radius:10px;font-weight:900}.cartlist{display:grid;gap:10px}.cartrow{display:flex;justify-content:space-between;gap:10px;background:var(--surface2);padding:12px;border-radius:10px}.qty button{padding:3px 8px;border-radius:6px;background:var(--surface);color:var(--text)}@media(max-width:850px){.hero{grid-template-columns:1fr}.hero h1{font-size:40px}.cats,.products{grid-template-columns:repeat(2,1fr)}.services{grid-template-columns:repeat(2,1fr)}.budget{grid-template-columns:1fr}.links{display:none}}@media(max-width:520px){.cats,.products,.services{grid-template-columns:1fr}.hero{padding-top:25px}.heroMain{padding:30px}.navin{padding:14px 16px}.section{padding-left:16px;padding-right:16px}}
-</style></head><body><div id="app"><div class="top">Peças, serviços e atendimento direto pelo WhatsApp</div><nav class="nav"><div class="navin"><div class="logo">ASSIS <span>AUTOPEÇAS</span></div><div class="links"><a href="#loja">Autopeças</a><a href="#servicos">Serviços</a><a href="#orcamento">Orçamento</a><a href="#contato">Contato</a></div><button class="cart" onclick="openCart()">🛒 Carrinho (<span id="count">0</span>)</button></div></nav><main>
-<section class="hero"><div class="heroMain"><div class="eyebrow">Autopeças & serviços</div><h1>Tudo para o seu carro, em um só lugar.</h1><p>Peças de qualidade, serviços automotivos e orçamento rápido pelo WhatsApp.</p><div class="actions"><a class="primary" href="#loja">Ver autopeças</a><button class="secondary" onclick="openBudget()">Solicitar orçamento</button></div></div><div class="quote"><div class="eyebrow">Atendimento rápido</div><h2>Precisa de uma peça ou serviço?</h2><p>Informe os dados do seu veículo e explique o que precisa. Sua solicitação será enviada diretamente para a Assis.</p><button onclick="openBudget()">Solicitar orçamento →</button></div></section>
-<section class="section" id="loja"><div class="head"><div><h2>Encontre sua peça</h2><p>Adicione quantos produtos quiser ao carrinho.</p></div></div><div class="cats"><div class="cat">🔧 Freios<small>Pastilhas, discos e mais</small></div><div class="cat">⚙️ Suspensão<small>Amortecedores e componentes</small></div><div class="cat">🛢️ Óleos e filtros<small>Lubrificação e manutenção</small></div><div class="cat">💡 Elétrica<small>Lâmpadas e componentes</small></div></div></section>
-<section class="section"><div class="head"><div><h2>Produtos em destaque</h2><p>Exemplos para o protótipo — preços podem ser ajustados.</p></div></div><div class="products" id="products"></div></section>
-<section class="section" id="servicos"><div class="head"><div><h2>Serviços automotivos</h2><p>Mão de obra para cuidar do seu veículo.</p></div></div><div class="services"><div class="service">🔧<b>Freios</b><span>Manutenção e substituição de componentes.</span></div><div class="service">⚙️<b>Suspensão</b><span>Verificação e manutenção do sistema.</span></div><div class="service">🛢️<b>Troca de óleo</b><span>Óleo e filtros para manutenção preventiva.</span></div><div class="service">🔍<b>Diagnóstico</b><span>Avaliação para identificar problemas no veículo.</span></div></div></section>
-<section class="section" id="orcamento"><div class="budget"><div><div class="eyebrow">Orçamento</div><h2>Peça seu orçamento sem complicação.</h2><p>Preencha os dados do veículo e diga o que você precisa. O WhatsApp será aberto com tudo organizado para facilitar o atendimento.</p></div><div style="display:flex;align-items:center;justify-content:center"><button onclick="openBudget()">Solicitar orçamento pelo WhatsApp →</button></div></div></section>
-<section class="section" id="contato"><div class="quote"><div class="eyebrow">Assis Autopeças e Serviços</div><h2>Atendimento direto pelo WhatsApp</h2><p>Use o site para escolher suas peças ou solicitar um serviço. O fechamento do atendimento acontece diretamente com a equipe.</p><a class="primary" href="https://wa.me/5541999141210" target="_blank" style="display:inline-block;width:max-content">Falar no WhatsApp</a></div></section></main><footer class="footer">ASSIS AUTOPEÇAS E SERVIÇOS · Peças e mão de obra para o seu veículo</footer></div>
-<div class="modal" id="modal"><div class="box"><div class="boxhead"><h2 id="modalTitle">Solicitar orçamento</h2><button class="close" onclick="closeModal()">✕</button></div><div id="modalBody"></div></div></div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Assis Autopeças e Serviços</title>
+
+<style>
+
+:root{
+    --red:#e53935;
+    --dark:#111827;
+    --dark2:#1f2937;
+    --light:#f5f7fa;
+    --white:#ffffff;
+    --gray:#64748b;
+    --border:#e2e8f0;
+    --green:#25d366;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--light);
+    color:#111827;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    font-family:inherit;
+}
+
+/* TOPO */
+
+.top{
+    background:var(--dark);
+    color:white;
+    text-align:center;
+    padding:10px;
+    font-size:14px;
+}
+
+/* NAVBAR */
+
+.nav{
+    background:white;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.nav-container{
+    max-width:1200px;
+    margin:auto;
+    padding:18px 22px;
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:900;
+}
+
+.logo span{
+    color:var(--red);
+}
+
+.menu{
+    display:flex;
+    gap:25px;
+    flex:1;
+    font-weight:bold;
+    font-size:14px;
+}
+
+.menu a:hover{
+    color:var(--red);
+}
+
+.cart-button{
+    background:var(--dark);
+    color:white;
+    padding:12px 16px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+/* HERO */
+
+.hero{
+    max-width:1200px;
+    margin:auto;
+    padding:50px 22px;
+    display:grid;
+    grid-template-columns:1.3fr .7fr;
+    gap:25px;
+}
+
+.hero-main{
+    background:linear-gradient(135deg,#111827,#334155);
+    color:white;
+    border-radius:24px;
+    padding:50px;
+    min-height:400px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.badge{
+    color:#ffb000;
+    font-size:13px;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.hero h1{
+    font-size:52px;
+    line-height:1.05;
+    margin:15px 0;
+}
+
+.hero p{
+    color:#d1d5db;
+    font-size:17px;
+    line-height:1.6;
+    max-width:600px;
+}
+
+.buttons{
+    display:flex;
+    gap:12px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.primary{
+    background:var(--red);
+    color:white;
+    padding:14px 20px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.secondary{
+    background:white;
+    color:var(--dark);
+    padding:14px 20px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.quote-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:35px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.quote-card h2{
+    font-size:28px;
+    margin:12px 0;
+}
+
+.quote-card p{
+    color:var(--gray);
+    line-height:1.6;
+}
+
+.quote-card button{
+    margin-top:20px;
+    background:var(--dark);
+    color:white;
+    padding:14px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+/* SEÇÕES */
+
+.section{
+    max-width:1200px;
+    margin:auto;
+    padding:30px 22px 60px;
+}
+
+.section-title{
+    margin-bottom:25px;
+}
+
+.section-title h2{
+    font-size:32px;
+}
+
+.section-title p{
+    color:var(--gray);
+    margin-top:6px;
+}
+
+/* CATEGORIAS */
+
+.categories{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.category{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:25px;
+    font-weight:bold;
+}
+
+.category small{
+    display:block;
+    color:var(--gray);
+    font-weight:normal;
+    margin-top:7px;
+}
+
+/* PRODUTOS */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.product{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.product-image{
+    height:150px;
+    background:#e9eef3;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:55px;
+}
+
+.product-info{
+    padding:18px;
+}
+
+.product-category{
+    color:var(--red);
+    font-size:11px;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+
+.product h3{
+    margin:8px 0;
+    font-size:17px;
+}
+
+.price{
+    font-size:21px;
+    font-weight:bold;
+    margin:12px 0;
+}
+
+.stock{
+    color:var(--gray);
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.add-button{
+    width:100%;
+    background:var(--dark);
+    color:white;
+    padding:12px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.add-button:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+/* SERVIÇOS */
+
+.services{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.service{
+    background:white;
+    border:1px solid var(--border);
+    padding:25px;
+    border-radius:16px;
+}
+
+.service b{
+    display:block;
+    margin:12px 0 7px;
+}
+
+.service span{
+    color:var(--gray);
+    font-size:14px;
+    line-height:1.5;
+}
+
+/* ORÇAMENTO */
+
+.budget{
+    background:var(--dark);
+    color:white;
+    border-radius:24px;
+    padding:40px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+    align-items:center;
+}
+
+.budget p{
+    color:#d1d5db;
+    line-height:1.6;
+    margin-top:12px;
+}
+
+.budget button{
+    background:var(--red);
+    color:white;
+    padding:15px 20px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+/* CONTATO */
+
+.contact{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:35px;
+}
+
+.whatsapp{
+    display:inline-block;
+    margin-top:20px;
+    background:var(--green);
+    color:white;
+    padding:14px 20px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid var(--border);
+    text-align:center;
+    padding:30px;
+    color:var(--gray);
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    z-index:100;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:min(600px,100%);
+    max-height:90vh;
+    overflow:auto;
+    border-radius:20px;
+    padding:25px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close{
+    background:#eef2f5;
+    padding:8px 12px;
+    border-radius:8px;
+}
+
+.field{
+    margin:15px 0;
+}
+
+.field label{
+    display:block;
+    font-weight:bold;
+    font-size:14px;
+    margin-bottom:7px;
+}
+
+.field input,
+.field textarea,
+.field select{
+    width:100%;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    font-family:inherit;
+}
+
+.field textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.whatsapp-button{
+    width:100%;
+    background:var(--green);
+    color:white;
+    padding:14px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+/* CARRINHO */
+
+.cart-list{
+    display:grid;
+    gap:10px;
+}
+
+.cart-item{
+    background:#f1f5f9;
+    padding:14px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.quantity{
+    display:flex;
+    align-items:center;
+    gap:7px;
+}
+
+.quantity button{
+    background:white;
+    border:1px solid var(--border);
+    padding:5px 9px;
+    border-radius:6px;
+}
+
+/* ADMIN */
+
+.admin-product{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    margin:10px 0;
+}
+
+.admin-product-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.admin-controls{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-top:10px;
+    flex-wrap:wrap;
+}
+
+.admin-controls button{
+    padding:7px 11px;
+    border-radius:7px;
+    background:#eef2f5;
+}
+
+.delete{
+    margin-left:auto;
+    color:#dc2626;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+    .hero{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:40px;
+    }
+
+    .categories,
+    .products,
+    .services{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .budget{
+        grid-template-columns:1fr;
+    }
+
+    .menu{
+        display:none;
+    }
+}
+
+@media(max-width:550px){
+
+    .categories,
+    .products,
+    .services{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        padding-top:25px;
+    }
+
+    .hero-main{
+        padding:30px;
+    }
+
+    .hero h1{
+        font-size:36px;
+    }
+
+    .nav-container{
+        padding:14px 16px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="top">
+    Peças, serviços e atendimento direto pelo WhatsApp
+</div>
+
+<nav class="nav">
+<div class="nav-container">
+
+    <div class="logo">
+        ASSIS <span>AUTOPEÇAS</span>
+    </div>
+
+    <div class="menu">
+        <a href="#loja">Autopeças</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#orcamento">Orçamento</a>
+        <a href="#contato">Contato</a>
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+        🛒 Carrinho (<span id="cartCount">0</span>)
+    </button>
+
+</div>
+</nav>
+
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-main">
+
+    <div class="badge">
+        Autopeças & serviços
+    </div>
+
+    <h1>
+        Tudo para o seu carro, em um só lugar.
+    </h1>
+
+    <p>
+        Peças de qualidade, serviços automotivos
+        e orçamento rápido pelo WhatsApp.
+    </p>
+
+    <div class="buttons">
+
+        <a href="#loja" class="primary">
+            Ver autopeças
+        </a>
+
+        <button class="secondary" onclick="openBudget()">
+            Solicitar orçamento
+        </button>
+
+    </div>
+
+</div>
+
+
+<div class="quote-card">
+
+    <div class="badge">
+        Atendimento rápido
+    </div>
+
+    <h2>
+        Precisa de uma peça ou serviço?
+    </h2>
+
+    <p>
+        Informe os dados do seu veículo e explique
+        o que precisa. Sua solicitação será enviada
+        diretamente para a Assis.
+    </p>
+
+    <button onclick="openBudget()">
+        Solicitar orçamento →
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- CATEGORIAS -->
+
+<section class="section" id="loja">
+
+<div class="section-title">
+
+    <h2>Encontre sua peça</h2>
+
+    <p>
+        Escolha os produtos e adicione ao carrinho.
+    </p>
+
+</div>
+
+<div class="categories">
+
+    <div class="category">
+        🔧 Freios
+        <small>Pastilhas, discos e componentes</small>
+    </div>
+
+    <div class="category">
+        ⚙️ Suspensão
+        <small>Amortecedores e componentes</small>
+    </div>
+
+    <div class="category">
+        🛢️ Óleos e filtros
+        <small>Lubrificação e manutenção</small>
+    </div>
+
+    <div class="category">
+        💡 Elétrica
+        <small>Lâmpadas e componentes</small>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- PRODUTOS -->
+
+<section class="section">
+
+<div class="section-title">
+
+    <h2>Produtos em destaque</h2>
+
+    <p>
+        Escolha quantas peças quiser.
+    </p>
+
+</div>
+
+<div class="products" id="products"></div>
+
+</section>
+
+
+<!-- SERVIÇOS -->
+
+<section class="section" id="servicos">
+
+<div class="section-title">
+
+    <h2>Serviços automotivos</h2>
+
+    <p>
+        Mão de obra para cuidar do seu veículo.
+    </p>
+
+</div>
+
+<div class="services">
+
+    <div class="service">
+        🔧
+        <b>Freios</b>
+        <span>
+            Manutenção e substituição de componentes.
+        </span>
+    </div>
+
+    <div class="service">
+        ⚙️
+        <b>Suspensão</b>
+        <span>
+            Verificação e manutenção do sistema.
+        </span>
+    </div>
+
+    <div class="service">
+        🛢️
+        <b>Troca de óleo</b>
+        <span>
+            Óleo e filtros para manutenção preventiva.
+        </span>
+    </div>
+
+    <div class="service">
+        🔍
+        <b>Diagnóstico</b>
+        <span>
+            Avaliação para identificar problemas.
+        </span>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ORÇAMENTO -->
+
+<section class="section" id="orcamento">
+
+<div class="budget">
+
+<div>
+
+    <div class="badge">
+        Orçamento
+    </div>
+
+    <h2>
+        Peça seu orçamento sem complicação.
+    </h2>
+
+    <p>
+        Informe os dados do veículo e diga o que
+        você precisa. O WhatsApp será aberto com
+        tudo organizado para facilitar o atendimento.
+    </p>
+
+</div>
+
+<div style="text-align:center">
+
+    <button onclick="openBudget()">
+        Solicitar orçamento pelo WhatsApp →
+    </button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CONTATO -->
+
+<section class="section" id="contato">
+
+<div class="contact">
+
+    <div class="badge">
+        Assis Autopeças e Serviços
+    </div>
+
+    <h2 style="margin-top:10px">
+        Atendimento direto pelo WhatsApp
+    </h2>
+
+    <p style="margin-top:10px;color:#64748b">
+        Tire suas dúvidas, consulte peças ou
+        solicite um orçamento.
+    </p>
+
+    <a
+        class="whatsapp"
+        href="https://wa.me/5541999141210"
+        target="_blank"
+    >
+        💬 Falar no WhatsApp
+    </a>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    ASSIS AUTOPEÇAS E SERVIÇOS
+    <br>
+    Peças e mão de obra para o seu veículo.
+
+</footer>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+<div class="modal-box">
+
+<div class="modal-header">
+
+    <h2 id="modalTitle">
+        Solicitar orçamento
+    </h2>
+
+    <button class="close" onclick="closeModal()">
+        ✕
+    </button>
+
+</div>
+
+<div id="modalBody"></div>
+
+</div>
+
+</div>
+
+
 <script>
-const WA='5541999141210';let cart=[];const products=[['Pastilha de freio dianteira','Freios','R$ 129,90','🛑'],['Filtro de óleo','Óleos e filtros','R$ 39,90','🛢️'],['Amortecedor dianteiro','Suspensão','R$ 349,90','⚙️'],['Lâmpada automotiva','Elétrica','R$ 29,90','💡'],['Filtro de ar','Óleos e filtros','R$ 49,90','🧰'],['Disco de freio','Freios','R$ 219,90','🔩'],['Palheta do limpador','Acessórios','R$ 59,90','🚘'],['Vela de ignição','Motor','R$ 34,90','🔧']];
-function render(){document.getElementById('products').innerHTML=products.map((p,i)=>`<div class="product"><div class="pic">${p[3]}</div><div class="info"><div class="tag">${p[1]}</div><h3>${p[0]}</h3><div class="price">${p[2]}</div><button class="add" onclick="add(${i})">Adicionar ao carrinho</button></div></div>`).join('');document.getElementById('count').textContent=cart.reduce((a,x)=>a+x.q,0)}
-function add(i){let x=cart.find(x=>x.i===i);x?x.q++:cart.push({i,q:1});render();toast('Produto adicionado ao carrinho');}
-function openCart(){document.getElementById('modalTitle').textContent='Seu carrinho';let b=document.getElementById('modalBody');if(!cart.length){b.innerHTML='<p>Seu carrinho está vazio.</p><button class="primary" onclick="closeModal()">Continuar comprando</button>';document.getElementById('modal').classList.add('open');return}b.innerHTML='<div class="cartlist">'+cart.map((x,k)=>`<div class="cartrow"><div><b>${products[x.i][0]}</b><br><small>${products[x.i][2]}</small></div><div class="qty"><button onclick="change(${k},-1)">−</button> ${x.q} <button onclick="change(${k},1)">+</button></div></div>`).join('')+'</div><br><button class="send" onclick="cartWA()">Finalizar pelo WhatsApp</button>';document.getElementById('modal').classList.add('open')}
-function change(k,d){cart[k].q+=d;if(cart[k].q<=0)cart.splice(k,1);render();openCart()}
-function cartWA(){let msg='Olá! Gostaria de solicitar um orçamento/compra das seguintes peças:%0A%0A'+cart.map(x=>'• '+products[x.i][0]+' — '+x.q+' unidade(s)').join('%0A')+'%0A%0AGostaria de confirmar disponibilidade e valor.';window.open('https://wa.me/'+WA+'?text='+msg,'_blank')}
-function openBudget(){document.getElementById('modalTitle').textContent='Solicitar orçamento';document.getElementById('modalBody').innerHTML='<div class="field"><label>Seu nome</label><input id="n" placeholder="Digite seu nome"></div><div class="field"><label>Modelo do carro</label><input id="m" placeholder="Ex.: Chevrolet Onix 1.0"></div><div class="field"><label>Ano</label><input id="y" placeholder="Ex.: 2022"></div><div class="field"><label>O que você precisa?</label><textarea id="s" placeholder="Ex.: Troca de pastilhas de freio, revisão, peça específica..."></textarea></div><button class="send" onclick="budgetWA()">Enviar orçamento pelo WhatsApp →</button>';document.getElementById('modal').classList.add('open')}
-function budgetWA(){let n=document.getElementById('n').value.trim(),m=document.getElementById('m').value.trim(),y=document.getElementById('y').value.trim(),s=document.getElementById('s').value.trim();if(!n||!m||!y||!s){alert('Preencha todos os campos para continuar.');return}let msg=`Olá! Gostaria de solicitar um orçamento.%0A%0ANome: ${encodeURIComponent(n)}%0AVeículo: ${encodeURIComponent(m)}%0AAno: ${encodeURIComponent(y)}%0ASolicitação: ${encodeURIComponent(s)}%0A%0AAguardo o orçamento. Obrigado!`;window.open('https://wa.me/'+WA+'?text='+msg,'_blank')}
-function closeModal(){document.getElementById('modal').classList.remove('open')}function toast(t){const x=document.createElement('div');x.textContent=t;x.style='position:fixed;bottom:22px;right:22px;background:#111827;color:#fff;padding:13px 17px;border-radius:10px;z-index:50;font-weight:800';document.body.appendChild(x);setTimeout(()=>x.remove(),1600)}render();
-</script></body></html>
+
+/* =========================
+   CONFIGURAÇÕES
+========================= */
+
+const WHATSAPP = "5541999141210";
+
+
+/* =========================
+   PRODUTOS
+========================= */
+
+const produtosPadrao = [
+
+[
+    "Pastilha de freio dianteira",
+    "Freios",
+    "R$ 129,90",
+    "🛑",
+    8
+],
+
+[
+    "Filtro de óleo",
+    "Óleos e filtros",
+    "R$ 39,90",
+    "🛢️",
+    12
+],
+
+[
+    "Amortecedor dianteiro",
+    "Suspensão",
+    "R$ 349,90",
+    "⚙️",
+    5
+],
+
+[
+    "Lâmpada automotiva",
+    "Elétrica",
+    "R$ 29,90",
+    "💡",
+    20
+],
+
+[
+    "Filtro de ar",
+    "Óleos e filtros",
+    "R$ 49,90",
+    "🧰",
+    9
+],
+
+[
+    "Disco de freio",
+    "Freios",
+    "R$ 219,90",
+    "🔩",
+    4
+],
+
+[
+    "Palheta do limpador",
+    "Acessórios",
+    "R$ 59,90",
+    "🚘",
+    7
+],
+
+[
+    "Vela de ignição",
+    "Motor",
+    "R$ 34,90",
+    "🔧",
+    15
+]
+
+];
+
+
+let produtos =
+JSON.parse(localStorage.getItem("assis_produtos")) ||
+produtosPadrao;
+
+
+let carrinho = [];
+
+
+/* =========================
+   RENDERIZAR PRODUTOS
+========================= */
+
+function renderProdutos(){
+
+    const container =
+    document.getElementById("products");
+
+    container.innerHTML = produtos.map((produto,index)=>{
+
+        const estoque = produto[4] || 0;
+
+        return `
+
+        <div class="product">
+
+            <div class="product-image">
+                ${produto[3]}
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-category">
+                    ${produto[1]}
+                </div>
+
+                <h3>
+                    ${produto[0]}
+                </h3>
+
+                <div class="price">
+                    ${produto[2]}
+                </div>
+
+                <div class="stock">
+
+                    ${
+                        estoque > 0
+                        ? "Estoque: " + estoque
+                        : "Produto indisponível"
+                    }
+
+                </div>
+
+                <button
+                    class="add-button"
+                    onclick="adicionarCarrinho(${index})"
+                    ${estoque <= 0 ? "disabled" : ""}
+                >
+
+                    ${
+                        estoque > 0
+                        ? "Adicionar ao carrinho"
+                        : "Indisponível"
+                    }
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+    atualizarContador();
+
+}
+
+
+/* =========================
+   CARRINHO
+========================= */
+
+function adicionarCarrinho(index){
+
+    if(produtos[index][4] <= 0){
+        return;
+    }
+
+    const existente =
+    carrinho.find(item => item.index === index);
+
+    if(existente){
+
+        if(existente.quantidade < produtos[index][4]){
+            existente.quantidade++;
+        }
+
+    }else{
+
+        carrinho.push({
+            index:index,
+            quantidade:1
+        });
+
+    }
+
+    atualizarContador();
+
+    alert("Produto adicionado ao carrinho!");
+
+}
+
+
+function atualizarContador(){
+
+    const total =
+    carrinho.reduce(
+        (soma,item)=>soma + item.quantidade,
+        0
+    );
+
+    document.getElementById("cartCount").textContent = total;
+
+}
+
+
+/* =========================
+   ABRIR CARRINHO
+========================= */
+
+function openCart(){
+
+    document.getElementById("modalTitle").textContent =
+    "Seu carrinho";
+
+    const body =
+    document.getElementById("modalBody");
+
+
+    if(carrinho.length === 0){
+
+        body.innerHTML = `
+
+            <p style="color:#64748b">
+                Seu carrinho está vazio.
+            </p>
+
+        `;
+
+        document
+        .getElementById("modal")
+        .classList.add("active");
+
+        return;
+    }
+
+
+    body.innerHTML = `
+
+        <div class="cart-list">
+
+            ${
+                carrinho.map((item,posicao)=>{
+
+                    const produto =
+                    produtos[item.index];
+
+                    return `
+
+                    <div class="cart-item">
+
+                        <div>
+
+                            <b>
+                                ${produto[0]}
+                            </b>
+
+                            <br>
+
+                            <small>
+                                ${produto[2]}
+                            </small>
+
+                        </div>
+
+                        <div class="quantity">
+
+                            <button
+                                onclick="alterarQuantidade(${posicao},-1)"
+                            >
+                                −
+                            </button>
+
+                            <b>
+                                ${item.quantidade}
+                            </b>
+
+                            <button
+                                onclick="alterarQuantidade(${posicao},1)"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    `;
+
+                }).join("")
+            }
+
+        </div>
+
+        <br>
+
+        <button
+            class="whatsapp-button"
+            onclick="enviarCarrinhoWhatsApp()"
+        >
+            Finalizar pelo WhatsApp
+        </button>
+
+    `;
+
+
+    document
+    .getElementById("modal")
+    .classList.add("active");
+
+}
+
+
+function alterarQuantidade(posicao,valor){
+
+    const item =
+    carrinho[posicao];
+
+    item.quantidade += valor;
+
+    if(item.quantidade <= 0){
+
+        carrinho.splice(posicao,1);
+
+    }
+
+    atualizarContador();
+
+    openCart();
+
+}
+
+
+/* =========================
+   WHATSAPP DO CARRINHO
+========================= */
+
+function enviarCarrinhoWhatsApp(){
+
+    let mensagem =
+    "Olá! Gostaria de solicitar um orçamento/compra das seguintes peças:\n\n";
+
+
+    carrinho.forEach(item=>{
+
+        const produto =
+        produtos[item.index];
+
+        mensagem +=
+        "• " +
+        produto[0] +
+        " — " +
+        item.quantidade +
+        " unidade(s)\n";
+
+    });
+
+
+    mensagem +=
+    "\nGostaria de confirmar disponibilidade e valor.";
+
+
+    const url =
+    "https://wa.me/" +
+    WHATSAPP +
+    "?text=" +
+    encodeURIComponent(mensagem);
+
+
+    window.open(url,"_blank");
+
+}
+
+
+/* =========================
+   ORÇAMENTO
+========================= */
+
+function openBudget(){
+
+    document.getElementById("modalTitle").textContent =
+    "Solicitar orçamento";
+
+
+    document.getElementById("modalBody").innerHTML = `
+
+        <div class="field">
+
+            <label>
+                Seu nome
+            </label>
+
+            <input
+                id="nome"
+                placeholder="Digite seu nome"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Modelo do carro
+            </label>
+
+            <input
+                id="carro"
+                placeholder="Ex.: Chevrolet Onix 1.0"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Ano
+            </label>
+
+            <input
+                id="ano"
+                placeholder="Ex.: 2022"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                O que você precisa?
+            </label>
+
+            <textarea
+                id="necessidade"
+                placeholder="Ex.: Troca de pastilhas de freio..."
+            ></textarea>
+
+        </div>
+
+
+        <button
+            class="whatsapp-button"
+            onclick="enviarOrcamento()"
+        >
+            Enviar orçamento pelo WhatsApp
+        </button>
+
+    `;
+
+
+    document
+    .getElementById("modal")
+    .classList.add("active");
+
+}
+
+
+function enviarOrcamento(){
+
+    const nome =
+    document.getElementById("nome").value.trim();
+
+    const carro =
+    document.getElementById("carro").value.trim();
+
+    const ano =
+    document.getElementById("ano").value.trim();
+
+    const necessidade =
+    document.getElementById("necessidade").value.trim();
+
+
+    if(!nome || !carro || !ano || !necessidade){
+
+        alert("Preencha todos os campos.");
+
+        return;
+    }
+
+
+    const mensagem =
+
+`Olá! Gostaria de solicitar um orçamento.
+
+Nome: ${nome}
+Veículo: ${carro}
+Ano: ${ano}
+Solicitação: ${necessidade}
+
+Aguardo o orçamento. Obrigado!`;
+
+
+    const url =
+    "https://wa.me/" +
+    WHATSAPP +
+    "?text=" +
+    encodeURIComponent(mensagem);
+
+
+    window.open(url,"_blank");
+
+}
+
+
+/* =========================
+   PAINEL ADMINISTRATIVO
+========================= */
+
+function openAdmin(){
+
+    document.getElementById("modalTitle").textContent =
+    "Painel administrativo";
+
+
+    document.getElementById("modalBody").innerHTML = `
+
+        <p style="color:#64748b;margin-bottom:20px">
+
+            Gerencie os produtos e o estoque da loja.
+
+        </p>
+
+
+        <h3>
+            Cadastrar novo produto
+        </h3>
+
+
+        <div class="field">
+
+            <label>
+                Nome do produto
+            </label>
+
+            <input
+                id="adminNome"
+                placeholder="Ex.: Pastilha de freio"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Categoria
+            </label>
+
+            <input
+                id="adminCategoria"
+                placeholder="Ex.: Freios"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Preço
+            </label>
+
+            <input
+                id="adminPreco"
+                placeholder="Ex.: R$ 149,90"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Ícone
+            </label>
+
+            <input
+                id="adminIcone"
+                value="🔧"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Estoque inicial
+            </label>
+
+            <input
+                id="adminEstoque"
+                type="number"
+                min="0"
+                value="1"
+            >
+
+        </div>
+
+
+        <button
+            class="primary"
+            style="width:100%"
+            onclick="cadastrarProduto()"
+        >
+            + Cadastrar produto
+        </button>
+
+
+        <hr style="margin:25px 0;border:0;border-top:1px solid #e2e8f0">
+
+
+        <h3>
+            Produtos cadastrados
+        </h3>
+
+
+        <div id="adminProducts"></div>
+
+    `;
+
+
+    document
+    .getElementById("modal")
+    .classList.add("active");
+
+
+    renderAdmin();
+
+}
+
+
+/* =========================
+   LISTA DO ADMIN
+========================= */
+
+function renderAdmin(){
+
+    const container =
+    document.getElementById("adminProducts");
+
+
+    if(!container){
+        return;
+    }
+
+
+    if(produtos.length === 0){
+
+        container.innerHTML =
+        "<p>Nenhum produto cadastrado.</p>";
+
+        return;
+    }
+
+
+    container.innerHTML =
+
+    produtos.map((produto,index)=>{
+
+        return `
+
+        <div class="admin-product">
+
+            <div class="admin-product-top">
+
+                <div>
+
+                    <b>
+                        ${produto[0]}
+                    </b>
+
+                    <br>
+
+                    <small>
+                        ${produto[1]} · ${produto[2]}
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-controls">
+
+                <button
+                    onclick="alterarEstoque(${index},-1)"
+                >
+                    −
+                </button>
+
+
+                <b>
+                    Estoque: ${produto[4] || 0}
+                </b>
+
+
+                <button
+                    onclick="alterarEstoque(${index},1)"
+                >
+                    +
+                </button>
+
+
+                <button
+                    class="delete"
+                    onclick="removerProduto(${index})"
+                >
+                    🗑️ Excluir
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+/* =========================
+   CADASTRAR PRODUTO
+========================= */
+
+function cadastrarProduto(){
+
+    const nome =
+    document.getElementById("adminNome").value.trim();
+
+    const categoria =
+    document.getElementById("adminCategoria").value.trim();
+
+    const preco =
+    document.getElementById("adminPreco").value.trim();
+
+    const icone =
+    document.getElementById("adminIcone").value.trim() ||
+    "🔧";
+
+    const estoque =
+    Number(
+        document.getElementById("adminEstoque").value
+    );
+
+
+    if(
+        !nome ||
+        !categoria ||
+        !preco ||
+        estoque < 0
+    ){
+
+        alert(
+            "Preencha nome, categoria, preço e estoque."
+        );
+
+        return;
+    }
+
+
+    produtos.push([
+        nome,
+        categoria,
+        preco,
+        icone,
+        estoque
+    ]);
+
+
+    salvarProdutos();
+
+    alert("Produto cadastrado com sucesso!");
+
+
+    openAdmin();
+
+}
+
+
+/* =========================
+   ALTERAR ESTOQUE
+========================= */
+
+function alterarEstoque(index,valor){
+
+    produtos[index][4] =
+    Math.max(
+        0,
+        (produtos[index][4] || 0) + valor
+    );
+
+
+    salvarProdutos();
+
+    openAdmin();
+
+}
+
+
+/* =========================
+   REMOVER PRODUTO
+========================= */
+
+function removerProduto(index){
+
+    const confirmar =
+    confirm(
+        "Tem certeza que deseja excluir este produto?"
+    );
+
+
+    if(!confirmar){
+        return;
+    }
+
+
+    produtos.splice(index,1);
+
+
+    salvarProdutos();
+
+    alert("Produto removido.");
+
+    openAdmin();
+
+}
+
+
+/* =========================
+   SALVAR
+========================= */
+
+function salvarProdutos(){
+
+    localStorage.setItem(
+        "assis_produtos",
+        JSON.stringify(produtos)
+    );
+
+
+    renderProdutos();
+
+}
+
+
+/* =========================
+   FECHAR MODAL
+========================= */
+
+function closeModal(){
+
+    document
+    .getElementById("modal")
+    .classList.remove("active");
+
+}
+
+
+/* =========================
+   INICIALIZAR
+========================= */
+
+renderProdutos();
+
+</script>
+
+</body>
+</html>
