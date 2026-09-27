@@ -1,31 +1,17 @@
-/* =====================================================
-   CONFIGURAÇÕES
-===================================================== */
+/* =========================================
+   CONFIGURAÇÃO
+========================================= */
+
+const SUPABASE_URL =
+    "https://efnajcayxuxubpdljsqw.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_5_veDMZ8ni1WghmwSujh7Q_i8wwFEwK";
+
+const WHATSAPP =
+    "5541999141210";
 
 
-/*
-    COLE AQUI A PROJECT URL DO SUPABASE
-*/
-const SUPABASE_URL = "https://efnajcayxuxubpdljsqw.supabase.co";
-
-
-/*
-    COLE AQUI A PUBLISHABLE KEY DO SUPABASE
-
-    NÃO coloque a Secret Key.
-*/
-const SUPABASE_KEY = "sb_publishable_5_veDMZ8ni1WghmwSujh7Q_i8wwFEwK";
-
-
-/*
-    WhatsApp da Assis Autopeças
-*/
-const WHATSAPP = "5541999141210";
-
-
-/*
-    Inicializa o Supabase
-*/
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
@@ -33,9 +19,9 @@ const supabaseClient =
     );
 
 
-/* =====================================================
+/* =========================================
    VARIÁVEIS
-===================================================== */
+========================================= */
 
 let produtos = [];
 
@@ -44,56 +30,137 @@ let carrinho = [];
 let usuarioAdmin = null;
 
 
-/* =====================================================
-   ÍCONES POR CATEGORIA
-===================================================== */
+/* =========================================
+   CARREGAR PRODUTOS DO SUPABASE
+========================================= */
 
-function getIconeCategoria(categoria) {
+async function carregarProdutos() {
 
-    const cat = String(categoria).toLowerCase();
+    const container =
+        document.getElementById("products");
+
+    container.innerHTML =
+        `<div class="loading">
+            Carregando produtos...
+        </div>`;
 
 
-    if (cat.includes("freio")) {
-        return "🛑";
+    const { data, error } =
+        await supabaseClient
+            .from("products")
+            .select("*")
+            .eq("active", true)
+            .order("created_at", {
+                ascending: false
+            });
+
+
+    if (error) {
+
+        console.error(error);
+
+        container.innerHTML =
+            `<div class="loading">
+                Não foi possível carregar os produtos.
+            </div>`;
+
+        return;
     }
 
 
-    if (cat.includes("suspens")) {
-        return "⚙️";
-    }
+    produtos = data || [];
 
-
-    if (
-        cat.includes("óleo") ||
-        cat.includes("oleo") ||
-        cat.includes("filtro")
-    ) {
-        return "🛢️";
-    }
-
-
-    if (cat.includes("elétr") || cat.includes("eletr")) {
-        return "💡";
-    }
-
-
-    if (cat.includes("motor")) {
-        return "🔧";
-    }
-
-
-    if (cat.includes("acess")) {
-        return "🚘";
-    }
-
-
-    return "🔩";
+    renderProdutos();
 }
 
 
-/* =====================================================
-   FORMATA PREÇO
-===================================================== */
+/* =========================================
+   MOSTRAR PRODUTOS
+========================================= */
+
+function renderProdutos() {
+
+    const container =
+        document.getElementById("products");
+
+
+    if (!produtos.length) {
+
+        container.innerHTML =
+            `<div class="loading">
+                Nenhum produto cadastrado ainda.
+            </div>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        produtos.map(produto => {
+
+            const imagem =
+                produto.image_url
+                    ? `<img
+                        src="${produto.image_url}"
+                        alt="${produto.name}"
+                        style="width:100%;height:100%;object-fit:cover;"
+                       >`
+                    : "🔧";
+
+
+            return `
+                <div class="product">
+
+                    <div class="product-image">
+                        ${imagem}
+                    </div>
+
+                    <div class="product-info">
+
+                        <div class="product-category">
+                            ${produto.category || "Autopeças"}
+                        </div>
+
+                        <h3>
+                            ${produto.name}
+                        </h3>
+
+                        <div class="product-price">
+                            ${formatarPreco(produto.price)}
+                        </div>
+
+                        <div class="stock">
+                            ${
+                                produto.stock > 0
+                                ? `${produto.stock} unidades disponíveis`
+                                : "Produto esgotado"
+                            }
+                        </div>
+
+                        <button
+                            class="add-button"
+                            onclick="adicionarCarrinho(${produto.id})"
+                            ${produto.stock <= 0 ? "disabled" : ""}
+                        >
+                            ${
+                                produto.stock > 0
+                                ? "Adicionar ao carrinho"
+                                : "Esgotado"
+                            }
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+}
+
+
+/* =========================================
+   FORMATAÇÃO DE PREÇO
+========================================= */
 
 function formatarPreco(valor) {
 
@@ -104,284 +171,85 @@ function formatarPreco(valor) {
             currency: "BRL"
         }
     );
-
 }
 
 
-/* =====================================================
-   CARREGAR PRODUTOS DO SUPABASE
-===================================================== */
-
-async function carregarProdutos() {
-
-    const container =
-        document.getElementById("products");
-
-
-    container.innerHTML = `
-        <p>Carregando produtos...</p>
-    `;
-
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("products")
-        .select("*")
-        .eq("active", true)
-        .order("created_at", {
-            ascending: false
-        });
-
-
-    if (error) {
-
-        console.error(
-            "Erro ao carregar produtos:",
-            error
-        );
-
-
-        container.innerHTML = `
-            <p>
-                Não foi possível carregar os produtos.
-                Tente novamente.
-            </p>
-        `;
-
-        return;
-    }
-
-
-    produtos = data || [];
-
-
-    renderProdutos();
-
-}
-
-
-/* =====================================================
-   MOSTRAR PRODUTOS
-===================================================== */
-
-function renderProdutos() {
-
-    const container =
-        document.getElementById("products");
-
-
-    if (!produtos.length) {
-
-        container.innerHTML = `
-            <p>
-                Nenhum produto disponível no momento.
-            </p>
-        `;
-
-        atualizarContadorCarrinho();
-
-        return;
-    }
-
-
-    container.innerHTML =
-        produtos.map((produto) => {
-
-            const estoque =
-                Number(produto.stock || 0);
-
-
-            const indisponivel =
-                estoque <= 0;
-
-
-            return `
-
-                <div class="product-card">
-
-                    <div class="product-image">
-
-                        ${
-                            produto.image_url ||
-                            getIconeCategoria(
-                                produto.category
-                            )
-                        }
-
-                    </div>
-
-
-                    <div class="product-info">
-
-                        <div class="product-category">
-
-                            ${produto.category || "Autopeças"}
-
-                        </div>
-
-
-                        <h3>
-                            ${produto.name}
-                        </h3>
-
-
-                        <div class="product-price">
-
-                            ${formatarPreco(produto.price)}
-
-                        </div>
-
-
-                        <div class="product-stock">
-
-                            ${
-                                indisponivel
-                                    ? "Produto indisponível"
-                                    : `${estoque} unidade(s) disponível(is)`
-                            }
-
-                        </div>
-
-
-                        <button
-                            class="add-button"
-                            onclick="adicionarCarrinho('${produto.id}')"
-                            ${indisponivel ? "disabled" : ""}
-                        >
-
-                            ${
-                                indisponivel
-                                    ? "Sem estoque"
-                                    : "Adicionar ao carrinho"
-                            }
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }).join("");
-
-
-    atualizarContadorCarrinho();
-
-}
-
-
-/* =====================================================
-   ADICIONAR AO CARRINHO
-===================================================== */
+/* =========================================
+   CARRINHO
+========================================= */
 
 function adicionarCarrinho(id) {
 
     const produto =
-        produtos.find(
-            p => String(p.id) === String(id)
-        );
+        produtos.find(p => p.id === id);
 
-
-    if (!produto) {
-        return;
-    }
-
-
-    const estoque =
-        Number(produto.stock || 0);
-
-
-    if (estoque <= 0) {
-
-        alert(
-            "Este produto está sem estoque."
-        );
-
-        return;
-    }
+    if (!produto) return;
 
 
     const item =
-        carrinho.find(
-            item =>
-                String(item.id) === String(id)
-        );
+        carrinho.find(item => item.id === id);
 
 
     if (item) {
 
-        if (item.quantidade >= estoque) {
+        if (item.quantidade < produto.stock) {
 
-            alert(
-                "Você atingiu o limite disponível em estoque."
-            );
+            item.quantidade++;
+
+        } else {
+
+            alert("Você atingiu o estoque disponível.");
 
             return;
         }
 
-
-        item.quantidade++;
-
     } else {
 
         carrinho.push({
-
             id: produto.id,
-
             quantidade: 1
-
         });
 
     }
 
 
-    atualizarContadorCarrinho();
+    atualizarCarrinho();
 
-
-    mostrarToast(
-        "Produto adicionado ao carrinho"
+    mostrarAviso(
+        "Produto adicionado ao carrinho!"
     );
-
 }
 
 
-/* =====================================================
-   CONTADOR DO CARRINHO
-===================================================== */
+/* =========================================
+   ATUALIZAR CONTADOR
+========================================= */
 
-function atualizarContadorCarrinho() {
+function atualizarCarrinho() {
 
-    const contador =
-        document.getElementById("cartCount");
-
-
-    const quantidade =
+    const total =
         carrinho.reduce(
-            (total, item) =>
-                total + item.quantidade,
+            (soma, item) =>
+                soma + item.quantidade,
             0
         );
 
 
-    contador.textContent =
-        quantidade;
-
+    document.getElementById("count")
+        .textContent = total;
 }
 
 
-/* =====================================================
+/* =========================================
    ABRIR CARRINHO
-===================================================== */
+========================================= */
 
 function openCart() {
 
     document.getElementById(
         "modalTitle"
     ).textContent =
-        "Seu carrinho";
+        "Seu carrinho e orçamento";
 
 
     const body =
@@ -393,25 +261,23 @@ function openCart() {
     if (!carrinho.length) {
 
         body.innerHTML = `
-
             <p>
                 Seu carrinho está vazio.
             </p>
 
+            <br>
 
             <button
                 class="btn-primary"
                 onclick="closeModal()"
             >
-
                 Continuar comprando
-
             </button>
-
         `;
 
-
-        abrirModal();
+        document
+            .getElementById("modal")
+            .classList.add("open");
 
         return;
     }
@@ -420,256 +286,343 @@ function openCart() {
     let total = 0;
 
 
-    const produtosCarrinho =
-        carrinho.map(
-            item => {
+    const lista =
+        carrinho.map(item => {
 
-                const produto =
-                    produtos.find(
-                        p =>
-                            String(p.id) ===
-                            String(item.id)
-                    );
+            const produto =
+                produtos.find(
+                    p => p.id === item.id
+                );
 
-
-                if (!produto) {
-                    return "";
-                }
+            if (!produto) return "";
 
 
-                const subtotal =
-                    Number(produto.price) *
-                    item.quantidade;
+            const subtotal =
+                Number(produto.price) *
+                item.quantidade;
 
 
-                total += subtotal;
+            total += subtotal;
 
 
-                return `
+            return `
+                <div class="cart-row">
 
-                    <div class="cart-row">
+                    <div>
+                        <strong>
+                            ${produto.name}
+                        </strong>
 
-                        <div>
+                        <br>
 
-                            <div class="cart-product-name">
-
-                                ${produto.name}
-
-                            </div>
-
-                            <div class="cart-product-price">
-
-                                ${formatarPreco(produto.price)}
-
-                            </div>
-
-                        </div>
+                        <small>
+                            ${formatarPreco(produto.price)}
+                        </small>
+                    </div>
 
 
-                        <div class="quantity">
+                    <div class="quantity">
 
-                            <button
-                                onclick="alterarQuantidade('${produto.id}', -1)"
-                            >
-                                −
-                            </button>
+                        <button
+                            onclick="alterarQuantidade(
+                                ${produto.id},
+                                -1
+                            )"
+                        >
+                            −
+                        </button>
 
+                        <strong>
+                            ${item.quantidade}
+                        </strong>
 
-                            <strong>
-                                ${item.quantidade}
-                            </strong>
-
-
-                            <button
-                                onclick="alterarQuantidade('${produto.id}', 1)"
-                            >
-                                +
-                            </button>
-
-                        </div>
+                        <button
+                            onclick="alterarQuantidade(
+                                ${produto.id},
+                                1
+                            )"
+                        >
+                            +
+                        </button>
 
                     </div>
 
-                `;
+                </div>
+            `;
 
-            }
-        ).join("");
+        }).join("");
 
 
     body.innerHTML = `
 
         <div class="cart-list">
-
-            ${produtosCarrinho}
-
+            ${lista}
         </div>
-
 
         <div class="cart-total">
+            Total estimado:
+            ${formatarPreco(total)}
+        </div>
 
-            <span>Total</span>
+        <p style="color:#64748b;font-size:13px;">
+            Quer comprar as peças e solicitar
+            instalação ou outro serviço?
+            Preencha os dados abaixo.
+        </p>
 
-            <span>
-                ${formatarPreco(total)}
-            </span>
+
+        <div class="field">
+
+            <label>
+                Seu nome
+            </label>
+
+            <input
+                id="cn"
+                placeholder="Digite seu nome"
+            >
 
         </div>
 
 
-        <br>
+        <div class="field">
+
+            <label>
+                Modelo do carro
+            </label>
+
+            <input
+                id="cm"
+                placeholder="Ex.: Chevrolet Onix 1.0"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Ano
+            </label>
+
+            <input
+                id="cy"
+                placeholder="Ex.: 2022"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Serviço / observação
+            </label>
+
+            <textarea
+                id="cs"
+                placeholder="Ex.: instalar as peças, troca de óleo, revisão..."
+            ></textarea>
+
+        </div>
 
 
         <button
             class="send-button"
-            onclick="finalizarCarrinhoWhatsApp()"
+            onclick="enviarOrcamentoCarrinho()"
         >
-
-            Finalizar pelo WhatsApp
-
+            Solicitar orçamento completo pelo WhatsApp →
         </button>
 
     `;
 
 
-    abrirModal();
-
+    document
+        .getElementById("modal")
+        .classList.add("open");
 }
 
 
-/* =====================================================
+/* =========================================
    ALTERAR QUANTIDADE
-===================================================== */
+========================================= */
 
-function alterarQuantidade(
-    id,
-    alteracao
-) {
+function alterarQuantidade(id, quantidade) {
 
     const item =
         carrinho.find(
-            item =>
-                String(item.id) ===
-                String(id)
+            item => item.id === id
         );
 
 
     const produto =
         produtos.find(
-            p =>
-                String(p.id) ===
-                String(id)
+            produto => produto.id === id
         );
 
 
-    if (!item || !produto) {
-        return;
-    }
+    if (!item || !produto) return;
 
 
-    item.quantidade +=
-        alteracao;
-
-
-    if (
-        item.quantidade >
-        Number(produto.stock)
-    ) {
-
-        item.quantidade =
-            Number(produto.stock);
-
-    }
+    item.quantidade += quantidade;
 
 
     if (item.quantidade <= 0) {
 
         carrinho =
             carrinho.filter(
-                item =>
-                    String(item.id) !==
-                    String(id)
+                item => item.id !== id
             );
 
     }
 
 
-    atualizarContadorCarrinho();
+    if (
+        item &&
+        item.quantidade > produto.stock
+    ) {
+
+        item.quantidade =
+            produto.stock;
+
+    }
+
+
+    atualizarCarrinho();
 
     openCart();
-
 }
 
 
-/* =====================================================
-   FINALIZAR CARRINHO NO WHATSAPP
-===================================================== */
+/* =========================================
+   ORÇAMENTO DO CARRINHO + SERVIÇO
+========================================= */
 
-function finalizarCarrinhoWhatsApp() {
+function enviarOrcamentoCarrinho() {
 
-    if (!carrinho.length) {
+    const nome =
+        document
+            .getElementById("cn")
+            .value
+            .trim();
+
+
+    const modelo =
+        document
+            .getElementById("cm")
+            .value
+            .trim();
+
+
+    const ano =
+        document
+            .getElementById("cy")
+            .value
+            .trim();
+
+
+    const servico =
+        document
+            .getElementById("cs")
+            .value
+            .trim();
+
+
+    if (!nome || !modelo || !ano) {
+
+        alert(
+            "Preencha nome, modelo do carro e ano."
+        );
+
         return;
     }
 
 
-    let mensagem =
-        "Olá! Gostaria de solicitar um orçamento/compra das seguintes peças:\n\n";
+    const itens =
+        carrinho.map(item => {
+
+            const produto =
+                produtos.find(
+                    produto =>
+                        produto.id === item.id
+                );
 
 
-    let total = 0;
-
-
-    carrinho.forEach(item => {
-
-        const produto =
-            produtos.find(
-                p =>
-                    String(p.id) ===
-                    String(item.id)
+            return (
+                "• " +
+                produto.name +
+                " — " +
+                item.quantidade +
+                " unidade(s)"
             );
 
-
-        if (!produto) {
-            return;
-        }
+        }).join("\n");
 
 
-        const subtotal =
-            Number(produto.price) *
-            item.quantidade;
-
-
-        total += subtotal;
-
-
-        mensagem +=
-            `• ${produto.name} — ${item.quantidade} unidade(s) — ${formatarPreco(subtotal)}\n`;
-
-    });
+    let mensagem =
+        "Olá! Gostaria de solicitar um orçamento completo.\n\n";
 
 
     mensagem +=
-        `\nTotal estimado: ${formatarPreco(total)}`;
+        "Nome: " +
+        nome +
+        "\n";
 
 
     mensagem +=
-        "\n\nGostaria de confirmar disponibilidade e valor.";
+        "Veículo: " +
+        modelo +
+        "\n";
+
+
+    mensagem +=
+        "Ano: " +
+        ano +
+        "\n\n";
+
+
+    mensagem +=
+        "PEÇAS SELECIONADAS:\n";
+
+
+    mensagem +=
+        itens +
+        "\n\n";
+
+
+    mensagem +=
+        "SERVIÇO / OBSERVAÇÃO:\n";
+
+
+    mensagem +=
+        (
+            servico ||
+            "Não informado"
+        ) +
+        "\n\n";
+
+
+    mensagem +=
+        "Gostaria de confirmar a disponibilidade, o valor das peças e, se necessário, o valor da instalação/serviço.";
 
 
     const url =
-        `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
+        "https://wa.me/" +
+        WHATSAPP +
+        "?text=" +
+        encodeURIComponent(mensagem);
 
 
     window.open(
         url,
         "_blank"
     );
-
 }
 
 
-/* =====================================================
-   ORÇAMENTO
-===================================================== */
+/* =========================================
+   ORÇAMENTO SEM PRODUTOS
+========================================= */
 
 function openBudget() {
 
@@ -690,7 +643,7 @@ function openBudget() {
             </label>
 
             <input
-                id="budgetName"
+                id="nome"
                 placeholder="Digite seu nome"
             >
 
@@ -704,7 +657,7 @@ function openBudget() {
             </label>
 
             <input
-                id="budgetCar"
+                id="modelo"
                 placeholder="Ex.: Chevrolet Onix 1.0"
             >
 
@@ -718,7 +671,7 @@ function openBudget() {
             </label>
 
             <input
-                id="budgetYear"
+                id="ano"
                 placeholder="Ex.: 2022"
             >
 
@@ -732,8 +685,8 @@ function openBudget() {
             </label>
 
             <textarea
-                id="budgetRequest"
-                placeholder="Ex.: Troca de pastilhas de freio, revisão, peça específica..."
+                id="solicitacao"
+                placeholder="Ex.: troca de pastilhas, revisão, peça específica..."
             ></textarea>
 
         </div>
@@ -741,64 +694,63 @@ function openBudget() {
 
         <button
             class="send-button"
-            onclick="enviarOrcamentoWhatsApp()"
+            onclick="enviarOrcamento()"
         >
-
             Enviar orçamento pelo WhatsApp →
-
         </button>
 
     `;
 
 
-    abrirModal();
-
+    document
+        .getElementById("modal")
+        .classList.add("open");
 }
 
 
-/* =====================================================
+/* =========================================
    ENVIAR ORÇAMENTO
-===================================================== */
+========================================= */
 
-function enviarOrcamentoWhatsApp() {
+function enviarOrcamento() {
 
     const nome =
         document
-            .getElementById("budgetName")
+            .getElementById("nome")
             .value
             .trim();
 
 
-    const carro =
+    const modelo =
         document
-            .getElementById("budgetCar")
+            .getElementById("modelo")
             .value
             .trim();
 
 
     const ano =
         document
-            .getElementById("budgetYear")
+            .getElementById("ano")
             .value
             .trim();
 
 
-    const pedido =
+    const solicitacao =
         document
-            .getElementById("budgetRequest")
+            .getElementById("solicitacao")
             .value
             .trim();
 
 
     if (
         !nome ||
-        !carro ||
+        !modelo ||
         !ano ||
-        !pedido
+        !solicitacao
     ) {
 
         alert(
-            "Preencha todos os campos para continuar."
+            "Preencha todos os campos."
         );
 
         return;
@@ -806,536 +758,174 @@ function enviarOrcamentoWhatsApp() {
 
 
     const mensagem =
+        `Olá! Gostaria de solicitar um orçamento.
 
-        `Olá! Gostaria de solicitar um orçamento.\n\n` +
+Nome: ${nome}
+Veículo: ${modelo}
+Ano: ${ano}
 
-        `Nome: ${nome}\n` +
+O que preciso:
+${solicitacao}
 
-        `Veículo: ${carro}\n` +
-
-        `Ano: ${ano}\n` +
-
-        `Solicitação: ${pedido}\n\n` +
-
-        `Aguardo o orçamento. Obrigado!`;
+Aguardo o orçamento. Obrigado!`;
 
 
     const url =
-        `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
+        "https://wa.me/" +
+        WHATSAPP +
+        "?text=" +
+        encodeURIComponent(
+            mensagem
+        );
 
 
     window.open(
         url,
         "_blank"
     );
-
 }
 
 
-/* =====================================================
-   ADMIN
-===================================================== */
+/* =========================================
+   FECHAR MODAL
+========================================= */
 
-async function openAdmin() {
+function closeModal() {
 
-    const {
-        data
-    } =
-        await supabaseClient
-            .auth
-            .getUser();
-
-
-    usuarioAdmin =
-        data.user;
-
-
-    if (!usuarioAdmin) {
-
-        mostrarLoginAdmin();
-
-        return;
-    }
-
-
-    mostrarPainelAdmin();
-
+    document
+        .getElementById("modal")
+        .classList.remove("open");
 }
 
 
-/* =====================================================
-   LOGIN ADMIN
-===================================================== */
+/* =========================================
+   AVISO
+========================================= */
 
-function mostrarLoginAdmin() {
+function mostrarAviso(texto) {
 
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "Área administrativa";
+    const aviso =
+        document.createElement("div");
 
 
-    document.getElementById(
-        "modalBody"
-    ).innerHTML = `
-
-        <p>
-            Entre com sua conta administrativa
-            para gerenciar os produtos.
-        </p>
+    aviso.textContent =
+        texto;
 
 
-        <div class="field">
-
-            <label>
-                E-mail
-            </label>
-
-            <input
-                type="email"
-                id="adminEmail"
-                placeholder="Seu e-mail"
-            >
-
-        </div>
+    aviso.style.position =
+        "fixed";
 
 
-        <div class="field">
-
-            <label>
-                Senha
-            </label>
-
-            <input
-                type="password"
-                id="adminPassword"
-                placeholder="Sua senha"
-            >
-
-        </div>
+    aviso.style.bottom =
+        "20px";
 
 
-        <button
-            class="btn-primary"
-            style="width:100%"
-            onclick="loginAdmin()"
-        >
-
-            Entrar
-
-        </button>
-
-    `;
+    aviso.style.right =
+        "20px";
 
 
-    abrirModal();
-
-}
-
-
-/* =====================================================
-   FAZER LOGIN
-===================================================== */
-
-async function loginAdmin() {
-
-    const email =
-        document
-            .getElementById(
-                "adminEmail"
-            )
-            .value
-            .trim();
+    aviso.style.background =
+        "#111827";
 
 
-    const password =
-        document
-            .getElementById(
-                "adminPassword"
-            )
-            .value;
+    aviso.style.color =
+        "white";
 
 
-    if (!email || !password) {
-
-        alert(
-            "Digite seu e-mail e sua senha."
-        );
-
-        return;
-    }
+    aviso.style.padding =
+        "14px 18px";
 
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .auth
-            .signInWithPassword({
-
-                email,
-
-                password
-
-            });
+    aviso.style.borderRadius =
+        "10px";
 
 
-    if (error) {
-
-        console.error(error);
-
-
-        alert(
-            "E-mail ou senha incorretos."
-        );
-
-        return;
-    }
+    aviso.style.fontWeight =
+        "bold";
 
 
-    usuarioAdmin =
-        data.user;
+    aviso.style.zIndex =
+        "999";
 
 
-    mostrarToast(
-        "Login realizado com sucesso"
+    document.body.appendChild(
+        aviso
     );
 
 
-    mostrarPainelAdmin();
+    setTimeout(() => {
 
+        aviso.remove();
+
+    }, 1800);
 }
 
 
-/* =====================================================
-   PAINEL ADMIN
-===================================================== */
+/* =========================================
+   ADMIN — LOGIN
+========================================= */
 
-async function mostrarPainelAdmin() {
+async function loginAdmin(
+    email,
+    senha
+) {
 
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "Painel administrativo";
-
-
-    document.getElementById(
-        "modalBody"
-    ).innerHTML = `
-
-        <p>
-            Cadastre produtos, controle preços
-            e gerencie o estoque.
-        </p>
-
-
-        <hr>
-
-
-        <h3>
-            Novo produto
-        </h3>
-
-
-        <div class="field">
-
-            <label>
-                Nome do produto
-            </label>
-
-            <input
-                id="adminName"
-                placeholder="Ex.: Pastilha de freio"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Categoria
-            </label>
-
-            <input
-                id="adminCategory"
-                placeholder="Ex.: Freios"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Preço
-            </label>
-
-            <input
-                id="adminPrice"
-                type="number"
-                step="0.01"
-                min="0"
-                placeholder="Ex.: 129.90"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Estoque inicial
-            </label>
-
-            <input
-                id="adminStock"
-                type="number"
-                min="0"
-                value="1"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Descrição
-            </label>
-
-            <textarea
-                id="adminDescription"
-                placeholder="Descrição do produto"
-            ></textarea>
-
-        </div>
-
-
-        <button
-            class="btn-primary"
-            style="width:100%"
-            onclick="cadastrarProduto()"
-        >
-
-            Cadastrar produto
-
-        </button>
-
-
-        <br><br>
-
-
-        <h3>
-            Produtos cadastrados
-        </h3>
-
-
-        <div id="adminProducts">
-            Carregando...
-        </div>
-
-
-        <button
-            class="admin-logout"
-            onclick="logoutAdmin()"
-        >
-
-            Sair da conta
-
-        </button>
-
-    `;
-
-
-    abrirModal();
-
-
-    await carregarProdutosAdmin();
-
-}
-
-
-/* =====================================================
-   CARREGAR PRODUTOS NO ADMIN
-===================================================== */
-
-async function carregarProdutosAdmin() {
-
-    const container =
-        document.getElementById(
-            "adminProducts"
-        );
-
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("products")
-            .select("*")
-            .order("created_at", {
-                ascending: false
+    const { data, error } =
+        await supabaseClient.auth
+            .signInWithPassword({
+                email: email,
+                password: senha
             });
 
 
     if (error) {
 
-        console.error(error);
+        alert(
+            "Erro ao entrar: " +
+            error.message
+        );
 
-
-        container.innerHTML =
-            "<p>Erro ao carregar produtos.</p>";
-
-        return;
+        return false;
     }
 
 
-    if (!data.length) {
-
-        container.innerHTML =
-            "<p>Nenhum produto cadastrado.</p>";
-
-        return;
-    }
+    usuarioAdmin =
+        data.user;
 
 
-    container.innerHTML =
-        data.map(
-            produto => `
-
-                <div class="admin-product">
-
-                    <div class="admin-product-header">
-
-                        <div>
-
-                            <strong>
-                                ${produto.name}
-                            </strong>
-
-                            <br>
-
-                            <small>
-                                ${produto.category}
-                                ·
-                                ${formatarPreco(produto.price)}
-                            </small>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="admin-actions">
-
-                        <button
-                            class="admin-small-button"
-                            onclick="alterarEstoque('${produto.id}', -1)"
-                        >
-                            −
-                        </button>
-
-
-                        <strong>
-                            Estoque:
-                            ${produto.stock || 0}
-                        </strong>
-
-
-                        <button
-                            class="admin-small-button"
-                            onclick="alterarEstoque('${produto.id}', 1)"
-                        >
-                            +
-                        </button>
-
-
-                        <button
-                            class="admin-small-button admin-delete"
-                            onclick="excluirProduto('${produto.id}')"
-                        >
-
-                            Excluir
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `
-        ).join("");
-
+    return true;
 }
 
 
-/* =====================================================
-   CADASTRAR PRODUTO
-===================================================== */
+/* =========================================
+   ADMIN — CADASTRAR PRODUTO
+========================================= */
 
-async function cadastrarProduto() {
+async function cadastrarProduto(
+    nome,
+    categoria,
+    preco,
+    estoque
+) {
 
-    const nome =
-        document
-            .getElementById("adminName")
-            .value
-            .trim();
-
-
-    const categoria =
-        document
-            .getElementById("adminCategory")
-            .value
-            .trim();
+    const {
+        data: userData
+    } =
+        await supabaseClient.auth
+            .getUser();
 
 
-    const preco =
-        Number(
-            document
-                .getElementById("adminPrice")
-                .value
-        );
-
-
-    const estoque =
-        Number(
-            document
-                .getElementById("adminStock")
-                .value
-        );
-
-
-    const descricao =
-        document
-            .getElementById(
-                "adminDescription"
-            )
-            .value
-            .trim();
-
-
-    if (
-        !nome ||
-        !categoria ||
-        !preco ||
-        preco < 0 ||
-        estoque < 0
-    ) {
+    if (!userData.user) {
 
         alert(
-            "Preencha nome, categoria, preço e estoque."
+            "Você precisa estar logado."
         );
 
         return;
     }
 
 
-    const {
-        error
-    } =
+    const { error } =
         await supabaseClient
             .from("products")
             .insert({
@@ -1344,14 +934,9 @@ async function cadastrarProduto() {
 
                 category: categoria,
 
-                price: preco,
+                price: Number(preco),
 
-                stock: estoque,
-
-                description:
-                    descricao,
-
-                image_url: null,
+                stock: Number(estoque),
 
                 active: true
 
@@ -1360,272 +945,35 @@ async function cadastrarProduto() {
 
     if (error) {
 
-        console.error(error);
-
-
         alert(
-            "Não foi possível cadastrar o produto."
+            "Erro ao cadastrar produto: " +
+            error.message
         );
 
         return;
     }
 
 
-    mostrarToast(
-        "Produto cadastrado"
+    alert(
+        "Produto cadastrado!"
     );
 
 
-    await carregarProdutos();
-
-    await carregarProdutosAdmin();
-
-
-    document
-        .getElementById("adminName")
-        .value = "";
-
-
-    document
-        .getElementById("adminCategory")
-        .value = "";
-
-
-    document
-        .getElementById("adminPrice")
-        .value = "";
-
-
-    document
-        .getElementById("adminStock")
-        .value = "1";
-
-
-    document
-        .getElementById("adminDescription")
-        .value = "";
-
+    carregarProdutos();
 }
 
 
-/* =====================================================
-   ALTERAR ESTOQUE
-===================================================== */
-
-async function alterarEstoque(
-    id,
-    alteracao
-) {
-
-    const {
-        data: produto,
-        error: erroBusca
-    } =
-        await supabaseClient
-            .from("products")
-            .select("stock")
-            .eq("id", id)
-            .single();
-
-
-    if (erroBusca) {
-
-        console.error(erroBusca);
-
-        alert(
-            "Erro ao encontrar o produto."
-        );
-
-        return;
-    }
-
-
-    const novoEstoque =
-        Math.max(
-            0,
-            Number(produto.stock || 0) +
-            alteracao
-        );
-
-
-    const {
-        error
-    } =
-        await supabaseClient
-            .from("products")
-            .update({
-
-                stock:
-                    novoEstoque
-
-            })
-            .eq("id", id);
-
-
-    if (error) {
-
-        console.error(error);
-
-        alert(
-            "Não foi possível atualizar o estoque."
-        );
-
-        return;
-    }
-
-
-    await carregarProdutos();
-
-    await carregarProdutosAdmin();
-
-
-    mostrarToast(
-        "Estoque atualizado"
-    );
-
-}
-
-
-/* =====================================================
-   EXCLUIR PRODUTO
-===================================================== */
-
-async function excluirProduto(id) {
-
-    const confirmar =
-        confirm(
-            "Tem certeza que deseja excluir este produto?"
-        );
-
-
-    if (!confirmar) {
-        return;
-    }
-
-
-    const {
-        error
-    } =
-        await supabaseClient
-            .from("products")
-            .delete()
-            .eq("id", id);
-
-
-    if (error) {
-
-        console.error(error);
-
-        alert(
-            "Não foi possível excluir o produto."
-        );
-
-        return;
-    }
-
-
-    await carregarProdutos();
-
-    await carregarProdutosAdmin();
-
-
-    mostrarToast(
-        "Produto excluído"
-    );
-
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-async function logoutAdmin() {
-
-    await supabaseClient
-        .auth
-        .signOut();
-
-
-    usuarioAdmin = null;
-
-
-    closeModal();
-
-
-    mostrarToast(
-        "Você saiu da conta"
-    );
-
-}
-
-
-/* =====================================================
-   MODAL
-===================================================== */
-
-function abrirModal() {
-
-    document
-        .getElementById("modal")
-        .classList
-        .add("open");
-
-}
-
-
-function closeModal() {
-
-    document
-        .getElementById("modal")
-        .classList
-        .remove("open");
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-function mostrarToast(texto) {
-
-    const toast =
-        document.createElement("div");
-
-
-    toast.className =
-        "toast";
-
-
-    toast.textContent =
-        texto;
-
-
-    document.body.appendChild(
-        toast
-    );
-
-
-    setTimeout(
-        () => {
-            toast.remove();
-        },
-        1800
-    );
-
-}
-
-
-/* =====================================================
-   INICIALIZAÇÃO
-===================================================== */
+/* =========================================
+   INICIAR
+========================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     () => {
 
         carregarProdutos();
+
+        atualizarCarrinho();
 
     }
 );
