@@ -1,6 +1,6 @@
-/* =========================
-   CONFIGURAÇÕES
-========================= */
+/* =========================================================
+   CONFIGURAÇÃO
+========================================================= */
 
 const SUPABASE_URL =
     "https://efnajcayxuxubpdljsqw.supabase.co";
@@ -11,6 +11,9 @@ const SUPABASE_KEY =
 const WHATSAPP =
     "5541999141210";
 
+const ADMIN_ID =
+    "fe380b01-d59d-45c6-900c-cfd8cfd0234f";
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -19,179 +22,239 @@ const supabaseClient =
     );
 
 
-/* =========================
-   VARIÁVEIS
-========================= */
+/* =========================================================
+   PRODUTOS
+========================================================= */
 
-let products = [];
+const produtosPadrao = [
+
+    [
+        "Pastilha de freio dianteira",
+        "Freios",
+        "R$ 129,90",
+        "🛑",
+        8
+    ],
+
+    [
+        "Filtro de óleo",
+        "Óleos e filtros",
+        "R$ 39,90",
+        "🛢️",
+        12
+    ],
+
+    [
+        "Amortecedor dianteiro",
+        "Suspensão",
+        "R$ 349,90",
+        "⚙️",
+        5
+    ],
+
+    [
+        "Lâmpada automotiva",
+        "Elétrica",
+        "R$ 29,90",
+        "💡",
+        20
+    ],
+
+    [
+        "Filtro de ar",
+        "Óleos e filtros",
+        "R$ 49,90",
+        "🧰",
+        9
+    ],
+
+    [
+        "Disco de freio",
+        "Freios",
+        "R$ 219,90",
+        "🔩",
+        4
+    ],
+
+    [
+        "Palheta do limpador",
+        "Acessórios",
+        "R$ 59,90",
+        "🚘",
+        7
+    ],
+
+    [
+        "Vela de ignição",
+        "Motor",
+        "R$ 34,90",
+        "🔧",
+        15
+    ]
+
+];
+
+
+let products =
+    JSON.parse(
+        localStorage.getItem("assis_products")
+    ) || produtosPadrao;
+
 
 let cart = [];
 
 
-/* =========================
+/* =========================================================
    PRODUTOS
-========================= */
+========================================================= */
 
-async function carregarProdutos() {
+async function carregarProdutosSupabase() {
 
     const { data, error } =
         await supabaseClient
             .from("products")
             .select("*")
             .eq("active", true)
-            .order("id", {
-                ascending: true
+            .order("created_at", {
+                ascending: false
             });
 
 
     if (error) {
 
-        console.error(
-            "Erro ao carregar produtos:",
-            error
+        console.log(
+            "Usando produtos locais:",
+            error.message
         );
 
-        document.getElementById("products").innerHTML = `
-            <p>
-                Não foi possível carregar os produtos.
-            </p>
-        `;
+        render();
 
         return;
+    }
+
+
+    if (data && data.length > 0) {
+
+        products = data.map(product => [
+
+            product.name,
+
+            product.category,
+
+            formatarPreco(product.price),
+
+            "🔧",
+
+            product.stock,
+
+            product.id
+
+        ]);
 
     }
 
 
-    products = data || [];
+    render();
+}
 
-    renderProdutos();
+
+function formatarPreco(valor) {
+
+    return Number(valor).toLocaleString(
+        "pt-BR",
+        {
+            style: "currency",
+            currency: "BRL"
+        }
+    );
 
 }
 
 
-/* =========================
-   RENDERIZAR PRODUTOS
-========================= */
+/* =========================================================
+   RENDERIZAÇÃO
+========================================================= */
 
-function renderProdutos() {
+function render() {
 
     const container =
         document.getElementById("products");
 
 
-    if (!products.length) {
-
-        container.innerHTML = `
-            <p>
-                Nenhum produto disponível no momento.
-            </p>
-        `;
-
-        return;
-
-    }
+    if (!container) return;
 
 
     container.innerHTML =
-        products.map(
-            (product, index) => {
+        products.map((product, index) => {
 
-                return `
+            return `
 
-                    <div class="product">
+                <div class="product">
 
-                        <div class="product-image">
+                    <div class="pic">
+                        ${product[3]}
+                    </div>
 
-                            ${
-                                product.image_url
-                                || "🔧"
-                            }
+                    <div class="info">
 
+                        <div class="tag">
+                            ${product[1]}
                         </div>
 
+                        <h3>
+                            ${product[0]}
+                        </h3>
 
-                        <div class="product-info">
-
-                            <div class="product-category">
-
-                                ${
-                                    product.category
-                                    || "Autopeças"
-                                }
-
-                            </div>
-
-
-                            <h3>
-
-                                ${
-                                    product.name
-                                }
-
-                            </h3>
-
-
-                            <div class="price">
-
-                                R$
-                                ${
-                                    Number(
-                                        product.price
-                                    ).toFixed(2).replace(
-                                        ".",
-                                        ","
-                                    )
-                                }
-
-                            </div>
-
-
-                            <button
-                                class="add-button"
-                                onclick="addToCart(${index})">
-
-                                Adicionar ao carrinho
-
-                            </button>
-
+                        <div class="price">
+                            ${product[2]}
                         </div>
+
+                        <button
+                            class="add"
+                            onclick="add(${index})"
+                        >
+                            Adicionar ao carrinho
+                        </button>
 
                     </div>
 
-                `;
+                </div>
 
-            }
-        ).join("");
+            `;
+
+        }).join("");
+
+
+    atualizarContador();
 
 }
 
 
-/* =========================
+/* =========================================================
    CARRINHO
-========================= */
+========================================================= */
 
-function addToCart(index) {
+function add(index) {
 
-    const product =
+    const produto =
         products[index];
 
 
-    const existing =
+    const itemExistente =
         cart.find(
-            item =>
-                item.product.id === product.id
+            item => item.index === index
         );
 
 
-    if (existing) {
+    if (itemExistente) {
 
-        existing.quantity++;
+        itemExistente.quantity++;
 
     } else {
 
         cart.push({
 
-            product: product,
+            index: index,
 
             quantity: 1
 
@@ -209,240 +272,28 @@ function addToCart(index) {
 }
 
 
-/* =========================
-   CONTADOR
-========================= */
-
 function atualizarContador() {
 
-    const count =
+    const contador =
+        document.getElementById("count");
+
+
+    if (!contador) return;
+
+
+    contador.textContent =
         cart.reduce(
             (total, item) =>
                 total + item.quantity,
             0
         );
 
-
-    document.getElementById(
-        "count"
-    ).textContent = count;
-
 }
 
 
-/* =========================
-   ABRIR CARRINHO
-========================= */
+function change(index, difference) {
 
-function openCart() {
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "Seu carrinho e orçamento";
-
-
-    const body =
-        document.getElementById(
-            "modalBody"
-        );
-
-
-    if (!cart.length) {
-
-        body.innerHTML = `
-
-            <p>
-                Seu carrinho está vazio.
-            </p>
-
-            <button
-                class="primary-button"
-                onclick="closeModal()">
-
-                Continuar comprando
-
-            </button>
-
-        `;
-
-
-        abrirModal();
-
-        return;
-
-    }
-
-
-    body.innerHTML = `
-
-        <div class="cart-list">
-
-            ${
-                cart.map(
-                    (item, index) => `
-
-                        <div class="cart-row">
-
-                            <div>
-
-                                <strong>
-                                    ${
-                                        item.product.name
-                                    }
-                                </strong>
-
-                                <br>
-
-                                <small>
-
-                                    R$
-                                    ${
-                                        Number(
-                                            item.product.price
-                                        ).toFixed(2).replace(
-                                            ".",
-                                            ","
-                                        )
-                                    }
-
-                                </small>
-
-                            </div>
-
-
-                            <div class="quantity">
-
-                                <button
-                                    onclick="alterarQuantidade(
-                                        ${index},
-                                        -1
-                                    )">
-
-                                    −
-
-                                </button>
-
-
-                                ${
-                                    item.quantity
-                                }
-
-
-                                <button
-                                    onclick="alterarQuantidade(
-                                        ${index},
-                                        1
-                                    )">
-
-                                    +
-
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                    `
-                ).join("")
-            }
-
-        </div>
-
-
-        <p
-            style="
-                color:var(--muted);
-                font-size:13px;
-            ">
-
-            Quer orçamento das peças,
-            instalação ou algum serviço junto?
-            Preencha os dados abaixo.
-
-        </p>
-
-
-        <div class="field">
-
-            <label>
-                Seu nome
-            </label>
-
-            <input
-                id="cn"
-                placeholder="Digite seu nome">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Modelo do carro
-            </label>
-
-            <input
-                id="cm"
-                placeholder="Ex.: Chevrolet Onix 1.0">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Ano
-            </label>
-
-            <input
-                id="cy"
-                placeholder="Ex.: 2022">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Serviço / observação
-            </label>
-
-            <textarea
-                id="cs"
-                placeholder="Ex.: instalar as peças, troca de óleo, revisão...">
-            </textarea>
-
-        </div>
-
-
-        <button
-            class="send-button"
-            onclick="enviarOrcamentoCarrinho()">
-
-            Solicitar orçamento completo pelo WhatsApp →
-
-        </button>
-
-    `;
-
-
-    abrirModal();
-
-}
-
-
-/* =========================
-   QUANTIDADE
-========================= */
-
-function alterarQuantidade(
-    index,
-    quantidade
-) {
-
-    cart[index].quantity +=
-        quantidade;
+    cart[index].quantity += difference;
 
 
     if (
@@ -461,34 +312,220 @@ function alterarQuantidade(
 }
 
 
-/* =========================
-   ORÇAMENTO DO CARRINHO
-========================= */
+/* =========================================================
+   CARRINHO / ORÇAMENTO
+========================================================= */
 
-function enviarOrcamentoCarrinho() {
+function openCart() {
 
-    const nome =
+    const title =
+        document.getElementById(
+            "modalTitle"
+        );
+
+    const body =
+        document.getElementById(
+            "modalBody"
+        );
+
+
+    title.textContent =
+        "Seu carrinho e orçamento";
+
+
+    if (cart.length === 0) {
+
+        body.innerHTML = `
+
+            <p>
+                Seu carrinho está vazio.
+            </p>
+
+            <button
+                class="primary"
+                onclick="closeModal()"
+            >
+                Continuar comprando
+            </button>
+
+        `;
+
+        document
+            .getElementById("modal")
+            .classList.add("open");
+
+        return;
+    }
+
+
+    let html = `
+
+        <div class="cartlist">
+
+    `;
+
+
+    cart.forEach(
+        (item, index) => {
+
+            const product =
+                products[item.index];
+
+
+            html += `
+
+                <div class="cartrow">
+
+                    <div>
+
+                        <b>
+                            ${product[0]}
+                        </b>
+
+                        <br>
+
+                        <small>
+                            ${product[2]}
+                        </small>
+
+                    </div>
+
+                    <div class="qty">
+
+                        <button
+                            onclick="change(${index}, -1)"
+                        >
+                            −
+                        </button>
+
+                        ${item.quantity}
+
+                        <button
+                            onclick="change(${index}, 1)"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    html += `
+
+        </div>
+
+        <br>
+
+        <p style="color:var(--muted);font-size:13px">
+
+            Quer orçamento das peças,
+            instalação ou algum serviço junto?
+            Preencha os dados abaixo.
+
+        </p>
+
+        <div class="field">
+
+            <label>
+                Seu nome
+            </label>
+
+            <input
+                id="cn"
+                placeholder="Digite seu nome"
+            >
+
+        </div>
+
+        <div class="field">
+
+            <label>
+                Modelo do carro
+            </label>
+
+            <input
+                id="cm"
+                placeholder="Ex.: Chevrolet Onix 1.0"
+            >
+
+        </div>
+
+        <div class="field">
+
+            <label>
+                Ano
+            </label>
+
+            <input
+                id="cy"
+                placeholder="Ex.: 2022"
+            >
+
+        </div>
+
+        <div class="field">
+
+            <label>
+                Serviço / observação
+            </label>
+
+            <textarea
+                id="cs"
+                placeholder="Ex.: instalar as peças, troca de óleo, revisão..."
+            ></textarea>
+
+        </div>
+
+        <button
+            class="send"
+            onclick="cartBudgetWA()"
+        >
+            Solicitar orçamento completo pelo WhatsApp →
+        </button>
+
+    `;
+
+
+    body.innerHTML = html;
+
+
+    document
+        .getElementById("modal")
+        .classList.add("open");
+
+}
+
+
+function cartBudgetWA() {
+
+    const name =
         document
             .getElementById("cn")
             .value
             .trim();
 
 
-    const modelo =
+    const model =
         document
             .getElementById("cm")
             .value
             .trim();
 
 
-    const ano =
+    const year =
         document
             .getElementById("cy")
             .value
             .trim();
 
 
-    const servico =
+    const service =
         document
             .getElementById("cs")
             .value
@@ -496,9 +533,9 @@ function enviarOrcamentoCarrinho() {
 
 
     if (
-        !nome ||
-        !modelo ||
-        !ano
+        !name ||
+        !model ||
+        !year
     ) {
 
         alert(
@@ -506,62 +543,65 @@ function enviarOrcamentoCarrinho() {
         );
 
         return;
-
     }
 
 
-    const itens =
-        cart.map(
-            item => {
+    const items =
+        cart.map(item => {
 
-                return (
-                    "• " +
-                    item.product.name +
-                    " — " +
-                    item.quantity +
-                    " unidade(s)"
-                );
-
-            }
-        ).join("\n");
+            const product =
+                products[item.index];
 
 
-    const mensagem =
+            return (
+                "• " +
+                product[0] +
+                " — " +
+                item.quantity +
+                " unidade(s)"
+            );
+
+        }).join("\n");
+
+
+    const message =
 
 `Olá! Gostaria de solicitar um orçamento completo.
 
-Nome: ${nome}
+Nome: ${name}
 
-Veículo: ${modelo}
+Veículo: ${model}
 
-Ano: ${ano}
+Ano: ${year}
 
 Peças selecionadas:
 
-${itens}
+${items}
 
 Serviço/observação:
-${servico || "Não informado"}
+${service || "Não informado"}
 
-Gostaria de confirmar disponibilidade, valor das peças e, se necessário, valor da instalação/serviço.`;
+Gostaria de confirmar a disponibilidade, o valor das peças e, se necessário, o valor da instalação/serviço.`;
 
 
-    window.open(
+    const url =
         "https://wa.me/" +
         WHATSAPP +
         "?text=" +
-        encodeURIComponent(
-            mensagem
-        ),
+        encodeURIComponent(message);
+
+
+    window.open(
+        url,
         "_blank"
     );
 
 }
 
 
-/* =========================
+/* =========================================================
    ORÇAMENTO SEM CARRINHO
-========================= */
+========================================================= */
 
 function openBudget() {
 
@@ -583,7 +623,8 @@ function openBudget() {
 
             <input
                 id="n"
-                placeholder="Digite seu nome">
+                placeholder="Digite seu nome"
+            >
 
         </div>
 
@@ -596,7 +637,8 @@ function openBudget() {
 
             <input
                 id="m"
-                placeholder="Ex.: Chevrolet Onix 1.0">
+                placeholder="Ex.: Chevrolet Onix 1.0"
+            >
 
         </div>
 
@@ -609,7 +651,8 @@ function openBudget() {
 
             <input
                 id="y"
-                placeholder="Ex.: 2022">
+                placeholder="Ex.: 2022"
+            >
 
         </div>
 
@@ -622,613 +665,21 @@ function openBudget() {
 
             <textarea
                 id="s"
-                placeholder="Ex.: Troca de pastilhas de freio, revisão, peça específica...">
-            </textarea>
+                placeholder="Ex.: Troca de pastilhas de freio, revisão, peça específica..."
+            ></textarea>
 
         </div>
 
 
         <button
-            class="send-button"
-            onclick="enviarOrcamento()">
-
+            class="send"
+            onclick="budgetWA()"
+        >
             Enviar orçamento pelo WhatsApp →
-
         </button>
 
     `;
 
-
-    abrirModal();
-
-}
-
-
-/* =========================
-   ENVIAR ORÇAMENTO
-========================= */
-
-function enviarOrcamento() {
-
-    const nome =
-        document
-            .getElementById("n")
-            .value
-            .trim();
-
-
-    const modelo =
-        document
-            .getElementById("m")
-            .value
-            .trim();
-
-
-    const ano =
-        document
-            .getElementById("y")
-            .value
-            .trim();
-
-
-    const solicitacao =
-        document
-            .getElementById("s")
-            .value
-            .trim();
-
-
-    if (
-        !nome ||
-        !modelo ||
-        !ano ||
-        !solicitacao
-    ) {
-
-        alert(
-            "Preencha todos os campos para continuar."
-        );
-
-        return;
-
-    }
-
-
-    const mensagem =
-
-`Olá! Gostaria de solicitar um orçamento.
-
-Nome: ${nome}
-
-Veículo: ${modelo}
-
-Ano: ${ano}
-
-Solicitação:
-${solicitacao}
-
-Aguardo o orçamento. Obrigado!`;
-
-
-    window.open(
-        "https://wa.me/" +
-        WHATSAPP +
-        "?text=" +
-        encodeURIComponent(
-            mensagem
-        ),
-        "_blank"
-    );
-
-}
-
-
-/* =========================
-   PAINEL ADMINISTRATIVO
-========================= */
-
-function openAdmin() {
-
-    document.getElementById(
-        "modalTitle"
-    ).textContent =
-        "Painel administrativo";
-
-
-    document.getElementById(
-        "modalBody"
-    ).innerHTML = `
-
-        <p
-            style="
-                color:var(--muted);
-            ">
-
-            Gerencie produtos,
-            preços e estoque.
-
-        </p>
-
-
-        <div class="field">
-
-            <label>
-                Novo produto
-            </label>
-
-            <input
-                id="an"
-                placeholder="Nome do produto">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Categoria
-            </label>
-
-            <input
-                id="ac"
-                placeholder="Ex.: Freios">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Preço
-            </label>
-
-            <input
-                id="ap"
-                placeholder="Ex.: 149,90">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Ícone
-            </label>
-
-            <input
-                id="ae"
-                value="🔧">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Estoque inicial
-            </label>
-
-            <input
-                id="as"
-                type="number"
-                min="0"
-                value="1">
-
-        </div>
-
-
-        <button
-            class="primary-button"
-            style="
-                width:100%;
-                border:none;
-                margin-bottom:18px;
-            "
-            onclick="cadastrarProduto()">
-
-            Cadastrar produto
-
-        </button>
-
-
-        <div id="adminList"></div>
-
-    `;
-
-
-    abrirModal();
-
-    renderAdmin();
-
-}
-
-
-/* =========================
-   LISTA ADMIN
-========================= */
-
-function renderAdmin() {
-
-    const container =
-        document.getElementById(
-            "adminList"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    if (!products.length) {
-
-        container.innerHTML =
-            "<p>Nenhum produto cadastrado.</p>";
-
-        return;
-
-    }
-
-
-    container.innerHTML = `
-
-        <h3>
-            Produtos cadastrados
-        </h3>
-
-        ${
-            products.map(
-                (product, index) => `
-
-                    <div class="admin-product">
-
-                        <strong>
-                            ${
-                                product.name
-                            }
-                        </strong>
-
-                        <br>
-
-                        <small>
-
-                            ${
-                                product.category
-                                || "Sem categoria"
-                            }
-
-                            ·
-
-                            R$
-                            ${
-                                Number(
-                                    product.price
-                                ).toFixed(2).replace(
-                                    ".",
-                                    ","
-                                )
-                            }
-
-                        </small>
-
-
-                        <div class="admin-actions">
-
-                            <button
-                                class="admin-small-button"
-                                onclick="alterarEstoque(
-                                    ${index},
-                                    -1
-                                )">
-
-                                −
-
-                            </button>
-
-
-                            <strong>
-
-                                Estoque:
-                                ${
-                                    product.stock
-                                    ?? 0
-                                }
-
-                            </strong>
-
-
-                            <button
-                                class="admin-small-button"
-                                onclick="alterarEstoque(
-                                    ${index},
-                                    1
-                                )">
-
-                                +
-
-                            </button>
-
-
-                            <button
-                                class="admin-small-button delete-button"
-                                onclick="excluirProduto(
-                                    ${index}
-                                )">
-
-                                Excluir
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                `
-            ).join("")
-        }
-
-    `;
-
-}
-
-
-/* =========================
-   CADASTRAR PRODUTO
-========================= */
-
-async function cadastrarProduto() {
-
-    const nome =
-        document
-            .getElementById("an")
-            .value
-            .trim();
-
-
-    const categoria =
-        document
-            .getElementById("ac")
-            .value
-            .trim();
-
-
-    const precoTexto =
-        document
-            .getElementById("ap")
-            .value
-            .trim()
-            .replace(",", ".");
-
-
-    const preco =
-        Number(precoTexto);
-
-
-    const icone =
-        document
-            .getElementById("ae")
-            .value
-            .trim()
-        || "🔧";
-
-
-    const estoque =
-        Number(
-            document
-                .getElementById("as")
-                .value
-        );
-
-
-    if (
-        !nome ||
-        !categoria ||
-        !precoTexto ||
-        Number.isNaN(preco) ||
-        estoque < 0
-    ) {
-
-        alert(
-            "Preencha nome, categoria, preço e estoque."
-        );
-
-        return;
-
-    }
-
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("products")
-            .insert({
-
-                name: nome,
-
-                category: categoria,
-
-                price: preco,
-
-                stock: estoque,
-
-                description: "",
-
-                image_url: icone,
-
-                active: true
-
-            })
-            .select()
-            .single();
-
-
-    if (error) {
-
-        console.error(error);
-
-        alert(
-            "Erro ao cadastrar produto: " +
-            error.message
-        );
-
-        return;
-
-    }
-
-
-    products.push(data);
-
-    renderProdutos();
-
-    openAdmin();
-
-    toast(
-        "Produto cadastrado"
-    );
-
-}
-
-
-/* =========================
-   ALTERAR ESTOQUE
-========================= */
-
-async function alterarEstoque(
-    index,
-    quantidade
-) {
-
-    const product =
-        products[index];
-
-
-    const estoqueAtual =
-        Number(
-            product.stock || 0
-        );
-
-
-    const novoEstoque =
-        Math.max(
-            0,
-            estoqueAtual + quantidade
-        );
-
-
-    const {
-        error
-    } =
-        await supabaseClient
-            .from("products")
-            .update({
-
-                stock: novoEstoque
-
-            })
-            .eq(
-                "id",
-                product.id
-            );
-
-
-    if (error) {
-
-        console.error(error);
-
-        alert(
-            "Erro ao alterar estoque: " +
-            error.message
-        );
-
-        return;
-
-    }
-
-
-    product.stock =
-        novoEstoque;
-
-
-    renderProdutos();
-
-    openAdmin();
-
-}
-
-
-/* =========================
-   EXCLUIR PRODUTO
-========================= */
-
-async function excluirProduto(
-    index
-) {
-
-    const product =
-        products[index];
-
-
-    const confirmar =
-        confirm(
-            "Excluir este produto?"
-        );
-
-
-    if (!confirmar) {
-        return;
-    }
-
-
-    const {
-        error
-    } =
-        await supabaseClient
-            .from("products")
-            .delete()
-            .eq(
-                "id",
-                product.id
-            );
-
-
-    if (error) {
-
-        console.error(error);
-
-        alert(
-            "Erro ao excluir produto: " +
-            error.message
-        );
-
-        return;
-
-    }
-
-
-    products.splice(
-        index,
-        1
-    );
-
-
-    renderProdutos();
-
-    openAdmin();
-
-    toast(
-        "Produto removido"
-    );
-
-}
-
-
-/* =========================
-   MODAL
-========================= */
-
-function abrirModal() {
 
     document
         .getElementById("modal")
@@ -1236,6 +687,86 @@ function abrirModal() {
 
 }
 
+
+function budgetWA() {
+
+    const name =
+        document
+            .getElementById("n")
+            .value
+            .trim();
+
+
+    const model =
+        document
+            .getElementById("m")
+            .value
+            .trim();
+
+
+    const year =
+        document
+            .getElementById("y")
+            .value
+            .trim();
+
+
+    const request =
+        document
+            .getElementById("s")
+            .value
+            .trim();
+
+
+    if (
+        !name ||
+        !model ||
+        !year ||
+        !request
+    ) {
+
+        alert(
+            "Preencha todos os campos para continuar."
+        );
+
+        return;
+    }
+
+
+    const message =
+
+`Olá! Gostaria de solicitar um orçamento.
+
+Nome: ${name}
+
+Veículo: ${model}
+
+Ano: ${year}
+
+Solicitação:
+${request}
+
+Aguardo o orçamento. Obrigado!`;
+
+
+    const url =
+        "https://wa.me/" +
+        WHATSAPP +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
 
 function closeModal() {
 
@@ -1246,25 +777,21 @@ function closeModal() {
 }
 
 
-/* =========================
-   NOTIFICAÇÃO
-========================= */
+/* =========================================================
+   AVISO
+========================================================= */
 
-function toast(
-    mensagem
-) {
+function toast(message) {
 
-    const elemento =
-        document.createElement(
-            "div"
-        );
+    const element =
+        document.createElement("div");
 
 
-    elemento.textContent =
-        mensagem;
+    element.textContent =
+        message;
 
 
-    elemento.style = `
+    element.style = `
 
         position:fixed;
 
@@ -1274,7 +801,7 @@ function toast(
 
         background:#111827;
 
-        color:white;
+        color:#fff;
 
         padding:13px 17px;
 
@@ -1288,31 +815,671 @@ function toast(
 
 
     document.body.appendChild(
-        elemento
+        element
     );
 
 
     setTimeout(
-        () => {
-
-            elemento.remove();
-
-        },
-        1800
+        () => element.remove(),
+        1600
     );
 
 }
 
 
-/* =========================
-   INICIALIZAÇÃO
-========================= */
+/* =========================================================
+   ADMINISTRAÇÃO
+========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+async function openAdmin() {
 
-        carregarProdutos();
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .auth
+            .getUser();
+
+
+    if (
+        !error &&
+        data.user &&
+        data.user.id === ADMIN_ID
+    ) {
+
+        openAdminPanel();
+
+        return;
 
     }
-);
+
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Login administrativo";
+
+
+    document.getElementById(
+        "modalBody"
+    ).innerHTML = `
+
+        <p style="color:var(--muted)">
+
+            Entre com o e-mail e a senha
+            do administrador.
+
+        </p>
+
+
+        <div class="field">
+
+            <label>
+                E-mail
+            </label>
+
+            <input
+                id="adminEmail"
+                type="email"
+                placeholder="Seu e-mail"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Senha
+            </label>
+
+            <input
+                id="adminPassword"
+                type="password"
+                placeholder="Sua senha"
+            >
+
+        </div>
+
+
+        <button
+            class="primary"
+            style="width:100%"
+            onclick="adminLogin()"
+        >
+            Entrar no painel
+        </button>
+
+    `;
+
+
+    document
+        .getElementById("modal")
+        .classList.add("open");
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+async function adminLogin() {
+
+    const email =
+        document
+            .getElementById("adminEmail")
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById("adminPassword")
+            .value;
+
+
+    if (!email || !password) {
+
+        alert(
+            "Informe e-mail e senha."
+        );
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .auth
+            .signInWithPassword({
+
+                email: email,
+
+                password: password
+
+            });
+
+
+    if (error) {
+
+        alert(
+            "E-mail ou senha incorretos."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !data.user ||
+        data.user.id !== ADMIN_ID
+    ) {
+
+        await supabaseClient
+            .auth
+            .signOut();
+
+
+        alert(
+            "Este usuário não tem acesso administrativo."
+        );
+
+        return;
+
+    }
+
+
+    openAdminPanel();
+
+}
+
+
+/* =========================================================
+   PAINEL ADMIN
+========================================================= */
+
+function openAdminPanel() {
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Painel administrativo";
+
+
+    document.getElementById(
+        "modalBody"
+    ).innerHTML = `
+
+        <p style="color:var(--muted)">
+
+            Gerencie produtos, preços e estoque.
+
+        </p>
+
+
+        <div class="field">
+
+            <label>
+                Novo produto
+            </label>
+
+            <input
+                id="productName"
+                placeholder="Nome do produto"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Categoria
+            </label>
+
+            <input
+                id="productCategory"
+                placeholder="Ex.: Freios"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Preço
+            </label>
+
+            <input
+                id="productPrice"
+                placeholder="Ex.: 149,90"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Estoque inicial
+            </label>
+
+            <input
+                id="productStock"
+                type="number"
+                min="0"
+                value="1"
+            >
+
+        </div>
+
+
+        <button
+            class="primary"
+            style="width:100%;margin-bottom:10px"
+            onclick="adminAdd()"
+        >
+            Cadastrar produto
+        </button>
+
+
+        <button
+            class="close"
+            style="width:100%;margin-bottom:18px"
+            onclick="adminLogout()"
+        >
+            Sair do painel
+        </button>
+
+
+        <div id="adminList"></div>
+
+    `;
+
+
+    document
+        .getElementById("modal")
+        .classList.add("open");
+
+
+    renderAdmin();
+
+}
+
+
+/* =========================================================
+   CADASTRAR PRODUTO
+========================================================= */
+
+async function adminAdd() {
+
+    const name =
+        document
+            .getElementById("productName")
+            .value
+            .trim();
+
+
+    const category =
+        document
+            .getElementById("productCategory")
+            .value
+            .trim();
+
+
+    const priceText =
+        document
+            .getElementById("productPrice")
+            .value
+            .trim()
+            .replace(",", ".");
+
+
+    const stock =
+        Number(
+            document
+                .getElementById("productStock")
+                .value
+        );
+
+
+    const price =
+        Number(priceText);
+
+
+    if (
+        !name ||
+        !category ||
+        !price ||
+        price < 0 ||
+        stock < 0
+    ) {
+
+        alert(
+            "Preencha nome, categoria, preço e estoque corretamente."
+        );
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("products")
+            .insert({
+
+                name: name,
+
+                category: category,
+
+                price: price,
+
+                stock: stock,
+
+                active: true
+
+            });
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "Não foi possível cadastrar o produto."
+        );
+
+        return;
+
+    }
+
+
+    alert(
+        "Produto cadastrado com sucesso!"
+    );
+
+
+    await carregarProdutosSupabase();
+
+    openAdminPanel();
+
+}
+
+
+/* =========================================================
+   ESTOQUE
+========================================================= */
+
+async function alterarEstoque(
+    id,
+    atual,
+    diferenca
+) {
+
+    const novoEstoque =
+        Math.max(
+            0,
+            Number(atual) + diferenca
+        );
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("products")
+            .update({
+                stock: novoEstoque
+            })
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "Não foi possível alterar o estoque."
+        );
+
+        return;
+
+    }
+
+
+    await carregarProdutosSupabase();
+
+    openAdminPanel();
+
+}
+
+
+/* =========================================================
+   EXCLUIR PRODUTO
+========================================================= */
+
+async function adminRemove(id) {
+
+    const confirmar =
+        confirm(
+            "Tem certeza que deseja excluir este produto?"
+        );
+
+
+    if (!confirmar) return;
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("products")
+            .delete()
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "Não foi possível excluir o produto."
+        );
+
+        return;
+
+    }
+
+
+    await carregarProdutosSupabase();
+
+    openAdminPanel();
+
+}
+
+
+/* =========================================================
+   LISTA ADMINISTRATIVA
+========================================================= */
+
+function renderAdmin() {
+
+    const container =
+        document.getElementById(
+            "adminList"
+        );
+
+
+    if (!container) return;
+
+
+    container.innerHTML =
+        "<h3>Produtos cadastrados</h3>" +
+        products.map(
+            product => {
+
+                const id =
+                    product[5];
+
+                const stock =
+                    product[4] || 0;
+
+
+                if (!id) {
+
+                    return `
+                        <div
+                            style="
+                                border:1px solid var(--line);
+                                padding:12px;
+                                border-radius:12px;
+                                margin:9px 0
+                            "
+                        >
+
+                            <b>
+                                ${product[0]}
+                            </b>
+
+                            <br>
+
+                            <small>
+                                ${product[1]}
+                                ·
+                                ${product[2]}
+                            </small>
+
+                            <div
+                                style="
+                                    margin-top:8px;
+                                    color:var(--muted)
+                                "
+                            >
+                                Produto local do protótipo
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+
+
+                return `
+
+                    <div
+                        style="
+                            border:1px solid var(--line);
+                            padding:12px;
+                            border-radius:12px;
+                            margin:9px 0
+                        "
+                    >
+
+                        <b>
+                            ${product[0]}
+                        </b>
+
+                        <br>
+
+                        <small>
+                            ${product[1]}
+                            ·
+                            ${product[2]}
+                        </small>
+
+
+                        <div
+                            style="
+                                display:flex;
+                                gap:7px;
+                                align-items:center;
+                                margin-top:9px
+                            "
+                        >
+
+                            <button
+                                class="close"
+                                onclick="alterarEstoque(
+                                    '${id}',
+                                    ${stock},
+                                    -1
+                                )"
+                            >
+                                −
+                            </button>
+
+
+                            <b>
+                                Estoque: ${stock}
+                            </b>
+
+
+                            <button
+                                class="close"
+                                onclick="alterarEstoque(
+                                    '${id}',
+                                    ${stock},
+                                    1
+                                )"
+                            >
+                                +
+                            </button>
+
+
+                            <button
+                                class="close"
+                                style="margin-left:auto"
+                                onclick="adminRemove('${id}')"
+                            >
+                                Excluir
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function adminLogout() {
+
+    await supabaseClient
+        .auth
+        .signOut();
+
+
+    closeModal();
+
+
+    toast(
+        "Sessão encerrada"
+    );
+
+}
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+carregarProdutosSupabase();

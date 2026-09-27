@@ -1,169 +1,115 @@
 :root {
+    color-scheme: light dark;
 
-    --bg: #f5f7f9;
-
-    --surface: #ffffff;
-
-    --surface2: #eef2f5;
-
-    --text: #111827;
-
-    --muted: #64748b;
-
-    --line: #dbe2e8;
+    --bg: light-dark(#f5f7f9, #0b0f13);
+    --surface: light-dark(#ffffff, #121820);
+    --surface2: light-dark(#eef2f5, #18212b);
+    --text: light-dark(#111827, #f5f7fa);
+    --muted: light-dark(#64748b, #9aa8b6);
+    --line: light-dark(#dbe2e8, #263442);
 
     --accent: #e53935;
-
     --dark: #111827;
-
 }
-
 
 * {
-
     box-sizing: border-box;
-
 }
-
 
 html {
-
     scroll-behavior: smooth;
-
 }
-
 
 body {
-
     margin: 0;
-
-    font-family:
-        Inter,
-        Arial,
-        sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
     background: var(--bg);
-
     color: var(--text);
-
 }
 
+button,
+input,
+textarea {
+    font: inherit;
+}
 
 button {
-
     border: 0;
-
     cursor: pointer;
-
-    font: inherit;
-
 }
 
-
 a {
-
     text-decoration: none;
-
     color: inherit;
-
 }
 
 
 /* TOPO */
 
-.top-bar {
-
+.top {
     background: #111827;
-
     color: white;
-
     text-align: center;
-
     padding: 9px;
-
     font-size: 13px;
-
 }
 
 
 /* NAVBAR */
 
-.navbar {
-
+.nav {
     position: sticky;
-
     top: 0;
-
     z-index: 10;
 
-    background: rgba(255,255,255,.94);
+    background: color-mix(
+        in srgb,
+        var(--surface) 94%,
+        transparent
+    );
 
     backdrop-filter: blur(12px);
 
     border-bottom: 1px solid var(--line);
-
 }
 
-
-.nav-container {
-
+.navin {
     max-width: 1180px;
-
     margin: auto;
 
     padding: 17px 22px;
 
     display: flex;
-
     align-items: center;
 
     gap: 28px;
-
 }
-
 
 .logo {
-
     font-weight: 900;
-
     font-size: 21px;
-
 }
-
 
 .logo span {
-
     color: var(--accent);
-
 }
 
-
-.nav-links {
-
+.links {
     display: flex;
-
     gap: 22px;
 
     font-size: 14px;
-
     font-weight: 700;
 
     flex: 1;
-
 }
 
-
-.nav-links a:hover {
-
+.links a:hover {
     color: var(--accent);
-
 }
 
-
-.cart-button {
-
+.cart {
     background: var(--dark);
-
     color: white;
 
     border-radius: 12px;
@@ -171,31 +117,27 @@ a {
     padding: 11px 15px;
 
     font-weight: 800;
-
 }
 
 
 /* HERO */
 
 .hero {
-
     max-width: 1180px;
-
     margin: auto;
 
     padding: 54px 22px 35px;
 
     display: grid;
 
-    grid-template-columns: 1.25fr .75fr;
+    grid-template-columns:
+        1.25fr
+        0.75fr;
 
     gap: 28px;
-
 }
 
-
-.hero-main {
-
+.heroMain {
     background:
         linear-gradient(
             135deg,
@@ -212,37 +154,27 @@ a {
     min-height: 390px;
 
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
 
     position: relative;
-
     overflow: hidden;
-
 }
 
-
-.hero-main::after {
-
+.heroMain::after {
     content: "⚙";
 
     position: absolute;
 
     right: -30px;
-
     bottom: -70px;
 
     font-size: 300px;
 
-    opacity: .07;
-
+    opacity: 0.07;
 }
 
-
 .eyebrow {
-
     color: #ffb000;
 
     font-weight: 900;
@@ -252,12 +184,9 @@ a {
     letter-spacing: 1.5px;
 
     font-size: 12px;
-
 }
 
-
-.hero-main h1 {
-
+.hero h1 {
     font-size: 52px;
 
     line-height: 1.02;
@@ -265,12 +194,9 @@ a {
     letter-spacing: -2.5px;
 
     margin: 12px 0;
-
 }
 
-
-.hero-main p {
-
+.hero p {
     color: #cbd5df;
 
     font-size: 17px;
@@ -278,12 +204,9 @@ a {
     max-width: 570px;
 
     line-height: 1.6;
-
 }
 
-
 .actions {
-
     display: flex;
 
     gap: 12px;
@@ -291,14 +214,9 @@ a {
     margin-top: 18px;
 
     flex-wrap: wrap;
-
 }
 
-
-.primary-button {
-
-    display: inline-block;
-
+.primary {
     background: var(--accent);
 
     color: white;
@@ -309,11 +227,10 @@ a {
 
     font-weight: 900;
 
+    display: inline-block;
 }
 
-
-.secondary-button {
-
+.secondary {
     background: white;
 
     color: #111827;
@@ -323,14 +240,12 @@ a {
     border-radius: 11px;
 
     font-weight: 900;
-
 }
 
 
-/* CARDS */
+/* QUOTE */
 
-.quote-card {
-
+.quote {
     background: var(--surface);
 
     border: 1px solid var(--line);
@@ -344,30 +259,21 @@ a {
     flex-direction: column;
 
     justify-content: center;
-
 }
 
-
-.quote-card h2 {
-
+.quote h2 {
     font-size: 27px;
 
     margin: 8px 0;
-
 }
 
-
-.quote-card p {
-
+.quote p {
     color: var(--muted);
 
     line-height: 1.5;
-
 }
 
-
-.quote-card button {
-
+.quote button {
     background: #111827;
 
     color: white;
@@ -379,63 +285,57 @@ a {
     font-weight: 900;
 
     margin-top: 10px;
-
 }
 
 
 /* SEÇÕES */
 
 .section {
-
     max-width: 1180px;
 
     margin: auto;
 
-    padding: 25px 22px 55px;
-
+    padding:
+        25px
+        22px
+        55px;
 }
 
+.head {
+    display: flex;
 
-.section-header {
+    align-items: end;
+
+    justify-content: space-between;
 
     margin-bottom: 20px;
-
 }
 
-
-.section-header h2 {
-
+.head h2 {
     font-size: 30px;
 
     margin: 0;
-
 }
 
-
-.section-header p {
-
+.head p {
     color: var(--muted);
 
     margin: 5px 0 0;
-
 }
 
 
 /* CATEGORIAS */
 
-.categories {
-
+.cats {
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 13px;
-
 }
 
-
-.category {
-
+.cat {
     background: var(--surface);
 
     border: 1px solid var(--line);
@@ -445,23 +345,9 @@ a {
     padding: 22px;
 
     font-weight: 900;
-
-    font-size: 18px;
-
 }
 
-
-.category strong {
-
-    display: block;
-
-    margin-top: 8px;
-
-}
-
-
-.category small {
-
+.cat small {
     display: block;
 
     color: var(--muted);
@@ -469,27 +355,21 @@ a {
     font-weight: 500;
 
     margin-top: 6px;
-
-    font-size: 13px;
-
 }
 
 
 /* PRODUTOS */
 
 .products {
-
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 16px;
-
 }
 
-
 .product {
-
     background: var(--surface);
 
     border: 1px solid var(--line);
@@ -497,12 +377,9 @@ a {
     border-radius: 18px;
 
     overflow: hidden;
-
 }
 
-
-.product-image {
-
+.pic {
     height: 150px;
 
     background:
@@ -517,19 +394,13 @@ a {
     place-items: center;
 
     font-size: 55px;
-
 }
 
-
-.product-info {
-
+.info {
     padding: 17px;
-
 }
 
-
-.product-category {
-
+.tag {
     font-size: 11px;
 
     color: var(--accent);
@@ -537,32 +408,23 @@ a {
     font-weight: 900;
 
     text-transform: uppercase;
-
 }
 
-
 .product h3 {
-
     font-size: 16px;
 
     margin: 7px 0;
-
 }
 
-
 .price {
-
     font-size: 21px;
 
     font-weight: 900;
 
     margin: 10px 0;
-
 }
 
-
-.add-button {
-
+.add {
     width: 100%;
 
     background: #111827;
@@ -574,25 +436,21 @@ a {
     border-radius: 9px;
 
     font-weight: 800;
-
 }
 
 
 /* SERVIÇOS */
 
 .services {
-
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 14px;
-
 }
 
-
 .service {
-
     background: var(--surface);
 
     border: 1px solid var(--line);
@@ -600,41 +458,26 @@ a {
     padding: 22px;
 
     border-radius: 16px;
-
 }
 
-
-.service-icon {
-
-    font-size: 30px;
-
-}
-
-
-.service strong {
-
+.service b {
     display: block;
 
     margin: 10px 0 5px;
-
 }
 
-
 .service span {
-
     color: var(--muted);
 
     font-size: 13px;
 
     line-height: 1.4;
-
 }
 
 
 /* ORÇAMENTO */
 
 .budget {
-
     background: #151b23;
 
     color: white;
@@ -648,32 +491,15 @@ a {
     grid-template-columns: 1fr 1fr;
 
     gap: 35px;
-
 }
 
-
 .budget p {
-
     color: #cbd5df;
 
     line-height: 1.6;
-
 }
-
-
-.budget-action {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-}
-
 
 .budget button {
-
     background: var(--accent);
 
     color: white;
@@ -683,71 +509,35 @@ a {
     border-radius: 10px;
 
     font-weight: 900;
+}
 
+.budgetButton {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 }
 
 
 /* ADMIN */
 
-.admin-access {
-
-    background: var(--surface);
-
-    border: 1px solid var(--line);
-
-    border-radius: 24px;
-
-    padding: 35px;
-
+.adminAccess {
     text-align: center;
 
+    align-items: center;
 }
 
+.adminAccess button {
+    width: auto;
 
-.admin-access h2 {
-
-    margin: 8px 0;
-
-    font-size: 28px;
-
-}
-
-
-.admin-access p {
-
-    color: var(--muted);
-
-}
-
-
-.admin-button {
-
-    background: #111827;
-
-    color: white;
-
-    padding: 14px 22px;
-
-    border-radius: 11px;
-
-    font-weight: 900;
-
-    margin-top: 10px;
-
-}
-
-
-.admin-button:hover {
-
-    background: var(--accent);
-
+    margin-top: 15px;
 }
 
 
 /* FOOTER */
 
 .footer {
-
     border-top: 1px solid var(--line);
 
     padding: 30px 22px;
@@ -755,19 +545,17 @@ a {
     color: var(--muted);
 
     text-align: center;
-
 }
 
 
 /* MODAL */
 
 .modal {
-
     position: fixed;
 
     inset: 0;
 
-    background: rgba(0,0,0,.6);
+    background: #0009;
 
     display: none;
 
@@ -776,22 +564,16 @@ a {
     z-index: 30;
 
     padding: 18px;
-
 }
-
 
 .modal.open {
-
     display: grid;
-
 }
 
-
-.modal-box {
-
+.box {
     background: var(--surface);
 
-    width: min(560px,100%);
+    width: min(560px, 100%);
 
     border-radius: 20px;
 
@@ -802,41 +584,38 @@ a {
     max-height: 90vh;
 
     overflow: auto;
-
 }
 
-
-.modal-header {
-
+.boxhead {
     display: flex;
 
     justify-content: space-between;
 
     align-items: center;
-
 }
 
+.boxhead h2 {
+    margin: 0;
+}
 
-.close-button {
-
+.close {
     background: var(--surface2);
+
+    color: var(--text);
 
     border-radius: 9px;
 
     padding: 7px 10px;
-
 }
 
+
+/* CAMPOS */
 
 .field {
-
     margin: 14px 0;
-
 }
 
-
 .field label {
-
     display: block;
 
     font-size: 13px;
@@ -844,13 +623,10 @@ a {
     font-weight: 800;
 
     margin-bottom: 6px;
-
 }
-
 
 .field input,
 .field textarea {
-
     width: 100%;
 
     padding: 12px;
@@ -862,21 +638,18 @@ a {
     background: var(--surface2);
 
     color: var(--text);
-
 }
 
-
 .field textarea {
-
     min-height: 85px;
 
     resize: vertical;
-
 }
 
 
-.send-button {
+/* BOTÃO WHATSAPP */
 
+.send {
     width: 100%;
 
     background: #25d366;
@@ -888,23 +661,18 @@ a {
     border-radius: 10px;
 
     font-weight: 900;
-
 }
 
 
 /* CARRINHO */
 
-.cart-list {
-
+.cartlist {
     display: grid;
 
     gap: 10px;
-
 }
 
-
-.cart-row {
-
+.cartrow {
     display: flex;
 
     justify-content: space-between;
@@ -916,12 +684,17 @@ a {
     padding: 12px;
 
     border-radius: 10px;
-
 }
 
+.qty {
+    display: flex;
 
-.quantity button {
+    align-items: center;
 
+    gap: 7px;
+}
+
+.qty button {
     padding: 3px 8px;
 
     border-radius: 6px;
@@ -929,55 +702,6 @@ a {
     background: var(--surface);
 
     color: var(--text);
-
-}
-
-
-/* ADMIN PRODUTOS */
-
-.admin-product {
-
-    border: 1px solid var(--line);
-
-    padding: 12px;
-
-    border-radius: 12px;
-
-    margin: 9px 0;
-
-}
-
-
-.admin-actions {
-
-    display: flex;
-
-    gap: 7px;
-
-    align-items: center;
-
-    margin-top: 9px;
-
-}
-
-
-.admin-small-button {
-
-    padding: 7px 10px;
-
-    border-radius: 7px;
-
-    background: var(--surface2);
-
-    color: var(--text);
-
-}
-
-
-.delete-button {
-
-    margin-left: auto;
-
 }
 
 
@@ -986,95 +710,61 @@ a {
 @media (max-width: 850px) {
 
     .hero {
-
         grid-template-columns: 1fr;
-
     }
 
-
-    .hero-main h1 {
-
+    .hero h1 {
         font-size: 40px;
-
     }
 
-
-    .categories,
+    .cats,
     .products {
-
-        grid-template-columns: repeat(2, 1fr);
-
+        grid-template-columns:
+            repeat(2, 1fr);
     }
-
 
     .services {
-
-        grid-template-columns: repeat(2, 1fr);
-
+        grid-template-columns:
+            repeat(2, 1fr);
     }
-
 
     .budget {
-
         grid-template-columns: 1fr;
-
     }
 
-
-    .nav-links {
-
+    .links {
         display: none;
-
     }
-
 }
 
 
 @media (max-width: 520px) {
 
-    .categories,
+    .cats,
     .products,
     .services {
-
         grid-template-columns: 1fr;
-
     }
-
 
     .hero {
-
         padding-top: 25px;
-
     }
 
-
-    .hero-main {
-
+    .heroMain {
         padding: 30px;
-
     }
 
-
-    .nav-container {
-
+    .navin {
         padding: 14px 16px;
-
     }
-
 
     .section {
-
         padding-left: 16px;
 
         padding-right: 16px;
-
     }
 
-
-    .hero-main h1 {
-
-        font-size: 36px;
-
+    .cart {
+        padding: 9px 11px;
     }
-
 }
