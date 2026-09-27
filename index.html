@@ -14,314 +14,402 @@
 
 <body>
 
-<header class="topbar">
-    Peças, serviços e atendimento direto pelo WhatsApp
-</header>
-
-<nav class="navbar">
-    <div class="nav-container">
-
-        <div class="logo">
-            ASSIS <span>AUTOPEÇAS</span>
-        </div>
-
-        <div class="nav-links">
-            <a href="#loja">Autopeças</a>
-            <a href="#servicos">Serviços</a>
-            <a href="#orcamento">Orçamento</a>
-            <a href="#contato">Contato</a>
-        </div>
-
-        <button class="cart-button" onclick="openCart()">
-            🛒 Carrinho
-            (<span id="count">0</span>)
-        </button>
-
+    <div class="top-bar">
+        Peças, serviços e atendimento direto pelo WhatsApp
     </div>
-</nav>
 
-<main>
+    <nav class="navbar">
+        <div class="nav-container">
 
-<section class="hero">
+            <div class="logo">
+                ASSIS <span>AUTOPEÇAS</span>
+            </div>
 
-    <div class="hero-main">
+            <div class="nav-links">
+                <a href="#loja">Autopeças</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#orcamento">Orçamento</a>
+                <a href="#contato">Contato</a>
+            </div>
 
-        <span class="eyebrow">
-            AUTOPEÇAS & SERVIÇOS
-        </span>
-
-        <h1>
-            Tudo para o seu carro,
-            em um só lugar.
-        </h1>
-
-        <p>
-            Peças de qualidade, serviços automotivos
-            e orçamento rápido pelo WhatsApp.
-        </p>
-
-        <div class="hero-buttons">
-
-            <a href="#loja" class="btn-primary">
-                Ver autopeças
-            </a>
-
-            <button class="btn-secondary" onclick="openBudget()">
-                Solicitar orçamento
+            <button class="cart-button" onclick="openCart()">
+                🛒 Carrinho (<span id="count">0</span>)
             </button>
 
         </div>
+    </nav>
 
-    </div>
+    <main>
 
-    <div class="hero-card">
+        <!-- HERO -->
+        <section class="hero">
 
-        <span class="eyebrow">
-            ATENDIMENTO RÁPIDO
-        </span>
+            <div class="hero-main">
 
-        <h2>
-            Precisa de uma peça ou serviço?
-        </h2>
+                <div class="eyebrow">
+                    Autopeças & serviços
+                </div>
 
-        <p>
-            Informe os dados do seu veículo e explique
-            o que precisa. Sua solicitação será enviada
-            diretamente para a Assis.
-        </p>
+                <h1>
+                    Tudo para o seu carro,
+                    em um só lugar.
+                </h1>
 
-        <button onclick="openBudget()" class="dark-button">
-            Solicitar orçamento →
-        </button>
+                <p>
+                    Peças de qualidade, serviços automotivos
+                    e orçamento rápido pelo WhatsApp.
+                </p>
 
-    </div>
+                <div class="actions">
 
-</section>
+                    <a href="#loja" class="primary-button">
+                        Ver autopeças
+                    </a>
+
+                    <button class="secondary-button" onclick="openBudget()">
+                        Solicitar orçamento
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="quote-card">
+
+                <div class="eyebrow">
+                    Atendimento rápido
+                </div>
+
+                <h2>
+                    Precisa de uma peça ou serviço?
+                </h2>
+
+                <p>
+                    Informe os dados do seu veículo e explique
+                    o que precisa. Sua solicitação será enviada
+                    diretamente para a Assis.
+                </p>
+
+                <button onclick="openBudget()">
+                    Solicitar orçamento →
+                </button>
+
+            </div>
+
+        </section>
 
 
-<section class="section" id="loja">
+        <!-- CATEGORIAS -->
+        <section class="section" id="loja">
 
-    <div class="section-title">
+            <div class="section-header">
+                <div>
+                    <h2>Encontre sua peça</h2>
 
-        <div>
-            <h2>Encontre sua peça</h2>
+                    <p>
+                        Adicione quantos produtos quiser ao carrinho.
+                    </p>
+                </div>
+            </div>
 
-            <p>
-                Adicione quantos produtos quiser ao carrinho.
-            </p>
+            <div class="categories">
+
+                <div class="category">
+                    🔧
+                    <strong>Freios</strong>
+                    <small>Pastilhas, discos e mais</small>
+                </div>
+
+                <div class="category">
+                    ⚙️
+                    <strong>Suspensão</strong>
+                    <small>Amortecedores e componentes</small>
+                </div>
+
+                <div class="category">
+                    🛢️
+                    <strong>Óleos e filtros</strong>
+                    <small>Lubrificação e manutenção</small>
+                </div>
+
+                <div class="category">
+                    💡
+                    <strong>Elétrica</strong>
+                    <small>Lâmpadas e componentes</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUTOS -->
+        <section class="section">
+
+            <div class="section-header">
+
+                <div>
+                    <h2>Produtos em destaque</h2>
+
+                    <p>
+                        Produtos disponíveis na loja.
+                    </p>
+                </div>
+
+            </div>
+
+            <div
+                class="products"
+                id="products">
+            </div>
+
+        </section>
+
+
+        <!-- SERVIÇOS -->
+        <section
+            class="section"
+            id="servicos">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Serviços automotivos</h2>
+
+                    <p>
+                        Mão de obra para cuidar do seu veículo.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="services">
+
+                <div class="service">
+
+                    <div class="service-icon">
+                        🔧
+                    </div>
+
+                    <strong>Freios</strong>
+
+                    <span>
+                        Manutenção e substituição
+                        de componentes.
+                    </span>
+
+                </div>
+
+
+                <div class="service">
+
+                    <div class="service-icon">
+                        ⚙️
+                    </div>
+
+                    <strong>Suspensão</strong>
+
+                    <span>
+                        Verificação e manutenção
+                        do sistema.
+                    </span>
+
+                </div>
+
+
+                <div class="service">
+
+                    <div class="service-icon">
+                        🛢️
+                    </div>
+
+                    <strong>Troca de óleo</strong>
+
+                    <span>
+                        Óleo e filtros para
+                        manutenção preventiva.
+                    </span>
+
+                </div>
+
+
+                <div class="service">
+
+                    <div class="service-icon">
+                        🔍
+                    </div>
+
+                    <strong>Diagnóstico</strong>
+
+                    <span>
+                        Avaliação para identificar
+                        problemas no veículo.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ORÇAMENTO -->
+        <section
+            class="section"
+            id="orcamento">
+
+            <div class="budget">
+
+                <div>
+
+                    <div class="eyebrow">
+                        Orçamento
+                    </div>
+
+                    <h2>
+                        Peça seu orçamento
+                        sem complicação.
+                    </h2>
+
+                    <p>
+                        Preencha os dados do veículo e diga
+                        o que você precisa. O WhatsApp será
+                        aberto com tudo organizado para
+                        facilitar o atendimento.
+                    </p>
+
+                </div>
+
+                <div class="budget-action">
+
+                    <button onclick="openBudget()">
+                        Solicitar orçamento pelo WhatsApp →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTATO -->
+        <section
+            class="section"
+            id="contato">
+
+            <div class="quote-card contact-card">
+
+                <div class="eyebrow">
+                    Assis Autopeças e Serviços
+                </div>
+
+                <h2>
+                    Atendimento direto pelo WhatsApp
+                </h2>
+
+                <p>
+                    Use o site para escolher suas peças
+                    ou solicitar um serviço. O fechamento
+                    do atendimento acontece diretamente
+                    com a equipe.
+                </p>
+
+                <div>
+
+                    <a
+                        class="primary-button"
+                        href="https://wa.me/5541999141210"
+                        target="_blank">
+
+                        Falar no WhatsApp
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ÁREA ADMINISTRATIVA -->
+        <section class="section">
+
+            <div class="admin-access">
+
+                <div class="eyebrow">
+                    Área restrita
+                </div>
+
+                <h2>
+                    Acesso administrativo
+                </h2>
+
+                <p>
+                    Área destinada à equipe para gerenciar
+                    produtos, preços e estoque.
+                </p>
+
+                <button
+                    class="admin-button"
+                    onclick="openAdmin()">
+
+                    ⚙️ Entrar no painel administrativo
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+        ASSIS AUTOPEÇAS E SERVIÇOS
+
+        <br>
+
+        Peças e mão de obra para o seu veículo
+
+    </footer>
+
+
+    <!-- MODAL -->
+    <div
+        class="modal"
+        id="modal">
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h2 id="modalTitle">
+                    Solicitar orçamento
+                </h2>
+
+                <button
+                    class="close-button"
+                    onclick="closeModal()">
+
+                    ✕
+
+                </button>
+
+            </div>
+
+            <div id="modalBody"></div>
+
         </div>
 
     </div>
 
-    <div class="categories">
 
-        <div class="category">
-            🔧
-            <strong>Freios</strong>
-            <small>Pastilhas, discos e mais</small>
-        </div>
-
-        <div class="category">
-            ⚙️
-            <strong>Suspensão</strong>
-            <small>Amortecedores e componentes</small>
-        </div>
-
-        <div class="category">
-            🛢️
-            <strong>Óleos e filtros</strong>
-            <small>Lubrificação e manutenção</small>
-        </div>
-
-        <div class="category">
-            💡
-            <strong>Elétrica</strong>
-            <small>Lâmpadas e componentes</small>
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section">
-
-    <div class="section-title">
-
-        <div>
-            <h2>Produtos em destaque</h2>
-
-            <p>
-                Escolha suas peças e adicione ao carrinho.
-            </p>
-        </div>
-
-    </div>
-
-    <div id="products" class="products">
-
-        <div class="loading">
-            Carregando produtos...
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section" id="servicos">
-
-    <div class="section-title">
-
-        <div>
-            <h2>Serviços automotivos</h2>
-
-            <p>
-                Mão de obra para cuidar do seu veículo.
-            </p>
-        </div>
-
-    </div>
-
-    <div class="services">
-
-        <div class="service">
-            🔧
-            <h3>Freios</h3>
-            <p>
-                Manutenção e substituição de componentes.
-            </p>
-        </div>
-
-        <div class="service">
-            ⚙️
-            <h3>Suspensão</h3>
-            <p>
-                Verificação e manutenção do sistema.
-            </p>
-        </div>
-
-        <div class="service">
-            🛢️
-            <h3>Troca de óleo</h3>
-            <p>
-                Óleo e filtros para manutenção preventiva.
-            </p>
-        </div>
-
-        <div class="service">
-            🔍
-            <h3>Diagnóstico</h3>
-            <p>
-                Avaliação para identificar problemas.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section" id="orcamento">
-
-    <div class="budget">
-
-        <div>
-
-            <span class="eyebrow">
-                ORÇAMENTO
-            </span>
-
-            <h2>
-                Peça seu orçamento sem complicação.
-            </h2>
-
-            <p>
-                Escolha suas peças, informe os dados do
-                veículo e solicite também a instalação
-                ou outro serviço.
-            </p>
-
-        </div>
-
-        <div class="budget-action">
-
-            <button onclick="openBudget()" class="btn-primary">
-                Solicitar orçamento pelo WhatsApp →
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section" id="contato">
-
-    <div class="contact">
-
-        <span class="eyebrow">
-            ASSIS AUTOPEÇAS E SERVIÇOS
-        </span>
-
-        <h2>
-            Atendimento direto pelo WhatsApp
-        </h2>
-
-        <p>
-            Escolha suas peças ou solicite um serviço.
-            O orçamento será tratado diretamente com a equipe.
-        </p>
-
-        <a
-            href="https://wa.me/5541999141210"
-            target="_blank"
-            class="whatsapp-button"
-        >
-            Falar no WhatsApp
-        </a>
-
-    </div>
-
-</section>
-
-</main>
-
-
-<footer>
-
-    ASSIS AUTOPEÇAS E SERVIÇOS
-
-</footer>
-
-
-<!-- MODAL -->
-
-<div id="modal" class="modal">
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h2 id="modalTitle">
-                Seu carrinho e orçamento
-            </h2>
-
-            <button onclick="closeModal()" class="close">
-                ✕
-            </button>
-
-        </div>
-
-        <div id="modalBody"></div>
-
-    </div>
-
-</div>
-
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
