@@ -1,1764 +1,401 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Assis Autopeças e Serviços</title>
+    <title>Assis Autopeças e Serviços</title>
 
-<style>
+    <link rel="stylesheet" href="style.css">
 
-:root{
-    --red:#e53935;
-    --dark:#111827;
-    --dark2:#1f2937;
-    --light:#f5f7fa;
-    --white:#ffffff;
-    --gray:#64748b;
-    --border:#e2e8f0;
-    --green:#25d366;
-}
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:var(--light);
-    color:#111827;
-}
-
-a{
-    text-decoration:none;
-    color:inherit;
-}
-
-button{
-    border:0;
-    cursor:pointer;
-    font-family:inherit;
-}
-
-/* TOPO */
-
-.top{
-    background:var(--dark);
-    color:white;
-    text-align:center;
-    padding:10px;
-    font-size:14px;
-}
-
-/* NAVBAR */
-
-.nav{
-    background:white;
-    border-bottom:1px solid var(--border);
-    position:sticky;
-    top:0;
-    z-index:20;
-}
-
-.nav-container{
-    max-width:1200px;
-    margin:auto;
-    padding:18px 22px;
-    display:flex;
-    align-items:center;
-    gap:30px;
-}
-
-.logo{
-    font-size:22px;
-    font-weight:900;
-}
-
-.logo span{
-    color:var(--red);
-}
-
-.menu{
-    display:flex;
-    gap:25px;
-    flex:1;
-    font-weight:bold;
-    font-size:14px;
-}
-
-.menu a:hover{
-    color:var(--red);
-}
-
-.cart-button{
-    background:var(--dark);
-    color:white;
-    padding:12px 16px;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-/* HERO */
-
-.hero{
-    max-width:1200px;
-    margin:auto;
-    padding:50px 22px;
-    display:grid;
-    grid-template-columns:1.3fr .7fr;
-    gap:25px;
-}
-
-.hero-main{
-    background:linear-gradient(135deg,#111827,#334155);
-    color:white;
-    border-radius:24px;
-    padding:50px;
-    min-height:400px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.badge{
-    color:#ffb000;
-    font-size:13px;
-    font-weight:bold;
-    text-transform:uppercase;
-    letter-spacing:1px;
-}
-
-.hero h1{
-    font-size:52px;
-    line-height:1.05;
-    margin:15px 0;
-}
-
-.hero p{
-    color:#d1d5db;
-    font-size:17px;
-    line-height:1.6;
-    max-width:600px;
-}
-
-.buttons{
-    display:flex;
-    gap:12px;
-    margin-top:25px;
-    flex-wrap:wrap;
-}
-
-.primary{
-    background:var(--red);
-    color:white;
-    padding:14px 20px;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-.secondary{
-    background:white;
-    color:var(--dark);
-    padding:14px 20px;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-.quote-card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:24px;
-    padding:35px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-}
-
-.quote-card h2{
-    font-size:28px;
-    margin:12px 0;
-}
-
-.quote-card p{
-    color:var(--gray);
-    line-height:1.6;
-}
-
-.quote-card button{
-    margin-top:20px;
-    background:var(--dark);
-    color:white;
-    padding:14px;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-/* SEÇÕES */
-
-.section{
-    max-width:1200px;
-    margin:auto;
-    padding:30px 22px 60px;
-}
-
-.section-title{
-    margin-bottom:25px;
-}
-
-.section-title h2{
-    font-size:32px;
-}
-
-.section-title p{
-    color:var(--gray);
-    margin-top:6px;
-}
-
-/* CATEGORIAS */
-
-.categories{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
-.category{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:25px;
-    font-weight:bold;
-}
-
-.category small{
-    display:block;
-    color:var(--gray);
-    font-weight:normal;
-    margin-top:7px;
-}
-
-/* PRODUTOS */
-
-.products{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-}
-
-.product{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:18px;
-    overflow:hidden;
-}
-
-.product-image{
-    height:150px;
-    background:#e9eef3;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:55px;
-}
-
-.product-info{
-    padding:18px;
-}
-
-.product-category{
-    color:var(--red);
-    font-size:11px;
-    font-weight:bold;
-    text-transform:uppercase;
-}
-
-.product h3{
-    margin:8px 0;
-    font-size:17px;
-}
-
-.price{
-    font-size:21px;
-    font-weight:bold;
-    margin:12px 0;
-}
-
-.stock{
-    color:var(--gray);
-    font-size:13px;
-    margin-bottom:10px;
-}
-
-.add-button{
-    width:100%;
-    background:var(--dark);
-    color:white;
-    padding:12px;
-    border-radius:9px;
-    font-weight:bold;
-}
-
-.add-button:disabled{
-    opacity:.5;
-    cursor:not-allowed;
-}
-
-/* SERVIÇOS */
-
-.services{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
-.service{
-    background:white;
-    border:1px solid var(--border);
-    padding:25px;
-    border-radius:16px;
-}
-
-.service b{
-    display:block;
-    margin:12px 0 7px;
-}
-
-.service span{
-    color:var(--gray);
-    font-size:14px;
-    line-height:1.5;
-}
-
-/* ORÇAMENTO */
-
-.budget{
-    background:var(--dark);
-    color:white;
-    border-radius:24px;
-    padding:40px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:30px;
-    align-items:center;
-}
-
-.budget p{
-    color:#d1d5db;
-    line-height:1.6;
-    margin-top:12px;
-}
-
-.budget button{
-    background:var(--red);
-    color:white;
-    padding:15px 20px;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-/* CONTATO */
-
-.contact{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:35px;
-}
-
-.whatsapp{
-    display:inline-block;
-    margin-top:20px;
-    background:var(--green);
-    color:white;
-    padding:14px 20px;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-/* FOOTER */
-
-footer{
-    border-top:1px solid var(--border);
-    text-align:center;
-    padding:30px;
-    color:var(--gray);
-}
-
-/* MODAL */
-
-.modal{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-    z-index:100;
-}
-
-.modal.active{
-    display:flex;
-}
-
-.modal-box{
-    background:white;
-    width:min(600px,100%);
-    max-height:90vh;
-    overflow:auto;
-    border-radius:20px;
-    padding:25px;
-}
-
-.modal-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.close{
-    background:#eef2f5;
-    padding:8px 12px;
-    border-radius:8px;
-}
-
-.field{
-    margin:15px 0;
-}
-
-.field label{
-    display:block;
-    font-weight:bold;
-    font-size:14px;
-    margin-bottom:7px;
-}
-
-.field input,
-.field textarea,
-.field select{
-    width:100%;
-    padding:12px;
-    border:1px solid var(--border);
-    border-radius:9px;
-    font-family:inherit;
-}
-
-.field textarea{
-    min-height:100px;
-    resize:vertical;
-}
-
-.whatsapp-button{
-    width:100%;
-    background:var(--green);
-    color:white;
-    padding:14px;
-    border-radius:10px;
-    font-weight:bold;
-}
-
-/* CARRINHO */
-
-.cart-list{
-    display:grid;
-    gap:10px;
-}
-
-.cart-item{
-    background:#f1f5f9;
-    padding:14px;
-    border-radius:10px;
-    display:flex;
-    justify-content:space-between;
-    gap:15px;
-}
-
-.quantity{
-    display:flex;
-    align-items:center;
-    gap:7px;
-}
-
-.quantity button{
-    background:white;
-    border:1px solid var(--border);
-    padding:5px 9px;
-    border-radius:6px;
-}
-
-/* ADMIN */
-
-.admin-product{
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:14px;
-    margin:10px 0;
-}
-
-.admin-product-top{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-}
-
-.admin-controls{
-    display:flex;
-    gap:8px;
-    align-items:center;
-    margin-top:10px;
-    flex-wrap:wrap;
-}
-
-.admin-controls button{
-    padding:7px 11px;
-    border-radius:7px;
-    background:#eef2f5;
-}
-
-.delete{
-    margin-left:auto;
-    color:#dc2626;
-}
-
-/* MOBILE */
-
-@media(max-width:850px){
-
-    .hero{
-        grid-template-columns:1fr;
-    }
-
-    .hero h1{
-        font-size:40px;
-    }
-
-    .categories,
-    .products,
-    .services{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .budget{
-        grid-template-columns:1fr;
-    }
-
-    .menu{
-        display:none;
-    }
-}
-
-@media(max-width:550px){
-
-    .categories,
-    .products,
-    .services{
-        grid-template-columns:1fr;
-    }
-
-    .hero{
-        padding-top:25px;
-    }
-
-    .hero-main{
-        padding:30px;
-    }
-
-    .hero h1{
-        font-size:36px;
-    }
-
-    .nav-container{
-        padding:14px 16px;
-    }
-
-}
-
-</style>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
 
-<div class="top">
-    Peças, serviços e atendimento direto pelo WhatsApp
-</div>
-
-<nav class="nav">
-<div class="nav-container">
-
-    <div class="logo">
-        ASSIS <span>AUTOPEÇAS</span>
+    <div class="top-bar">
+        Peças, serviços e atendimento direto pelo WhatsApp
     </div>
 
-    <div class="menu">
-        <a href="#loja">Autopeças</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#orcamento">Orçamento</a>
-        <a href="#contato">Contato</a>
-    </div>
-
-    <button class="cart-button" onclick="openCart()">
-        🛒 Carrinho (<span id="cartCount">0</span>)
-    </button>
-
-</div>
-</nav>
-
-
-<main>
-
-<!-- HERO -->
-
-<section class="hero">
-
-<div class="hero-main">
-
-    <div class="badge">
-        Autopeças & serviços
-    </div>
-
-    <h1>
-        Tudo para o seu carro, em um só lugar.
-    </h1>
-
-    <p>
-        Peças de qualidade, serviços automotivos
-        e orçamento rápido pelo WhatsApp.
-    </p>
-
-    <div class="buttons">
-
-        <a href="#loja" class="primary">
-            Ver autopeças
-        </a>
-
-        <button class="secondary" onclick="openBudget()">
-            Solicitar orçamento
-        </button>
-
-    </div>
-
-</div>
-
-
-<div class="quote-card">
-
-    <div class="badge">
-        Atendimento rápido
-    </div>
-
-    <h2>
-        Precisa de uma peça ou serviço?
-    </h2>
-
-    <p>
-        Informe os dados do seu veículo e explique
-        o que precisa. Sua solicitação será enviada
-        diretamente para a Assis.
-    </p>
-
-    <button onclick="openBudget()">
-        Solicitar orçamento →
-    </button>
-
-</div>
-
-</section>
-
-
-<!-- CATEGORIAS -->
-
-<section class="section" id="loja">
-
-<div class="section-title">
-
-    <h2>Encontre sua peça</h2>
-
-    <p>
-        Escolha os produtos e adicione ao carrinho.
-    </p>
-
-</div>
-
-<div class="categories">
-
-    <div class="category">
-        🔧 Freios
-        <small>Pastilhas, discos e componentes</small>
-    </div>
-
-    <div class="category">
-        ⚙️ Suspensão
-        <small>Amortecedores e componentes</small>
-    </div>
-
-    <div class="category">
-        🛢️ Óleos e filtros
-        <small>Lubrificação e manutenção</small>
-    </div>
-
-    <div class="category">
-        💡 Elétrica
-        <small>Lâmpadas e componentes</small>
-    </div>
-
-</div>
-
-</section>
-
-
-<!-- PRODUTOS -->
-
-<section class="section">
-
-<div class="section-title">
-
-    <h2>Produtos em destaque</h2>
-
-    <p>
-        Escolha quantas peças quiser.
-    </p>
-
-</div>
-
-<div class="products" id="products"></div>
-
-</section>
-
-
-<!-- SERVIÇOS -->
-
-<section class="section" id="servicos">
-
-<div class="section-title">
-
-    <h2>Serviços automotivos</h2>
-
-    <p>
-        Mão de obra para cuidar do seu veículo.
-    </p>
-
-</div>
-
-<div class="services">
-
-    <div class="service">
-        🔧
-        <b>Freios</b>
-        <span>
-            Manutenção e substituição de componentes.
-        </span>
-    </div>
-
-    <div class="service">
-        ⚙️
-        <b>Suspensão</b>
-        <span>
-            Verificação e manutenção do sistema.
-        </span>
-    </div>
-
-    <div class="service">
-        🛢️
-        <b>Troca de óleo</b>
-        <span>
-            Óleo e filtros para manutenção preventiva.
-        </span>
-    </div>
-
-    <div class="service">
-        🔍
-        <b>Diagnóstico</b>
-        <span>
-            Avaliação para identificar problemas.
-        </span>
-    </div>
-
-</div>
-
-</section>
-
-
-<!-- ORÇAMENTO -->
-
-<section class="section" id="orcamento">
-
-<div class="budget">
-
-<div>
-
-    <div class="badge">
-        Orçamento
-    </div>
-
-    <h2>
-        Peça seu orçamento sem complicação.
-    </h2>
-
-    <p>
-        Informe os dados do veículo e diga o que
-        você precisa. O WhatsApp será aberto com
-        tudo organizado para facilitar o atendimento.
-    </p>
-
-</div>
-
-<div style="text-align:center">
-
-    <button onclick="openBudget()">
-        Solicitar orçamento pelo WhatsApp →
-    </button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CONTATO -->
-
-<section class="section" id="contato">
-
-<div class="contact">
-
-    <div class="badge">
-        Assis Autopeças e Serviços
-    </div>
-
-    <h2 style="margin-top:10px">
-        Atendimento direto pelo WhatsApp
-    </h2>
-
-    <p style="margin-top:10px;color:#64748b">
-        Tire suas dúvidas, consulte peças ou
-        solicite um orçamento.
-    </p>
-
-    <a
-        class="whatsapp"
-        href="https://wa.me/5541999141210"
-        target="_blank"
-    >
-        💬 Falar no WhatsApp
-    </a>
-
-</div>
-
-</section>
-
-</main>
-
-
-<footer>
-
-    ASSIS AUTOPEÇAS E SERVIÇOS
-    <br>
-    Peças e mão de obra para o seu veículo.
-
-</footer>
-
-
-<!-- MODAL -->
-
-<div class="modal" id="modal">
-
-<div class="modal-box">
-
-<div class="modal-header">
-
-    <h2 id="modalTitle">
-        Solicitar orçamento
-    </h2>
-
-    <button class="close" onclick="closeModal()">
-        ✕
-    </button>
-
-</div>
-
-<div id="modalBody"></div>
-
-</div>
-
-</div>
-
-
-<script>
-
-/* =========================
-   CONFIGURAÇÕES
-========================= */
-
-const WHATSAPP = "5541999141210";
-
-
-/* =========================
-   PRODUTOS
-========================= */
-
-const produtosPadrao = [
-
-[
-    "Pastilha de freio dianteira",
-    "Freios",
-    "R$ 129,90",
-    "🛑",
-    8
-],
-
-[
-    "Filtro de óleo",
-    "Óleos e filtros",
-    "R$ 39,90",
-    "🛢️",
-    12
-],
-
-[
-    "Amortecedor dianteiro",
-    "Suspensão",
-    "R$ 349,90",
-    "⚙️",
-    5
-],
-
-[
-    "Lâmpada automotiva",
-    "Elétrica",
-    "R$ 29,90",
-    "💡",
-    20
-],
-
-[
-    "Filtro de ar",
-    "Óleos e filtros",
-    "R$ 49,90",
-    "🧰",
-    9
-],
-
-[
-    "Disco de freio",
-    "Freios",
-    "R$ 219,90",
-    "🔩",
-    4
-],
-
-[
-    "Palheta do limpador",
-    "Acessórios",
-    "R$ 59,90",
-    "🚘",
-    7
-],
-
-[
-    "Vela de ignição",
-    "Motor",
-    "R$ 34,90",
-    "🔧",
-    15
-]
-
-];
-
-
-let produtos =
-JSON.parse(localStorage.getItem("assis_produtos")) ||
-produtosPadrao;
-
-
-let carrinho = [];
-
-
-/* =========================
-   RENDERIZAR PRODUTOS
-========================= */
-
-function renderProdutos(){
-
-    const container =
-    document.getElementById("products");
-
-    container.innerHTML = produtos.map((produto,index)=>{
-
-        const estoque = produto[4] || 0;
-
-        return `
-
-        <div class="product">
-
-            <div class="product-image">
-                ${produto[3]}
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <div class="logo">
+                ASSIS <span>AUTOPEÇAS</span>
             </div>
 
-            <div class="product-info">
+            <div class="nav-links">
+                <a href="#loja">Autopeças</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#orcamento">Orçamento</a>
+                <a href="#contato">Contato</a>
+            </div>
 
-                <div class="product-category">
-                    ${produto[1]}
+            <button class="cart-button" onclick="openCart()">
+                🛒 Carrinho
+                (<span id="cartCount">0</span>)
+            </button>
+
+        </div>
+    </nav>
+
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="hero-main">
+
+                <div class="eyebrow">
+                    AUTOPEÇAS & SERVIÇOS
                 </div>
 
-                <h3>
-                    ${produto[0]}
-                </h3>
+                <h1>
+                    Tudo para o seu carro,
+                    em um só lugar.
+                </h1>
 
-                <div class="price">
-                    ${produto[2]}
+                <p>
+                    Peças de qualidade, serviços automotivos
+                    e orçamento rápido pelo WhatsApp.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a href="#loja" class="btn-primary">
+                        Ver autopeças
+                    </a>
+
+                    <button class="btn-secondary" onclick="openBudget()">
+                        Solicitar orçamento
+                    </button>
+
                 </div>
 
-                <div class="stock">
+            </div>
 
-                    ${
-                        estoque > 0
-                        ? "Estoque: " + estoque
-                        : "Produto indisponível"
-                    }
 
+            <div class="quote-card">
+
+                <div class="eyebrow">
+                    ATENDIMENTO RÁPIDO
                 </div>
 
-                <button
-                    class="add-button"
-                    onclick="adicionarCarrinho(${index})"
-                    ${estoque <= 0 ? "disabled" : ""}
-                >
+                <h2>
+                    Precisa de uma peça ou serviço?
+                </h2>
 
-                    ${
-                        estoque > 0
-                        ? "Adicionar ao carrinho"
-                        : "Indisponível"
-                    }
+                <p>
+                    Informe os dados do seu veículo e explique
+                    o que precisa. Sua solicitação será enviada
+                    diretamente para a Assis.
+                </p>
 
+                <button onclick="openBudget()">
+                    Solicitar orçamento →
                 </button>
 
             </div>
 
-        </div>
-
-        `;
-
-    }).join("");
-
-    atualizarContador();
-
-}
+        </section>
 
 
-/* =========================
-   CARRINHO
-========================= */
+        <!-- CATEGORIAS -->
+        <section class="section" id="loja">
 
-function adicionarCarrinho(index){
+            <div class="section-header">
 
-    if(produtos[index][4] <= 0){
-        return;
-    }
+                <div>
+                    <h2>Encontre sua peça</h2>
 
-    const existente =
-    carrinho.find(item => item.index === index);
+                    <p>
+                        Adicione quantos produtos quiser ao carrinho.
+                    </p>
+                </div>
 
-    if(existente){
-
-        if(existente.quantidade < produtos[index][4]){
-            existente.quantidade++;
-        }
-
-    }else{
-
-        carrinho.push({
-            index:index,
-            quantidade:1
-        });
-
-    }
-
-    atualizarContador();
-
-    alert("Produto adicionado ao carrinho!");
-
-}
+            </div>
 
 
-function atualizarContador(){
+            <div class="categories">
 
-    const total =
-    carrinho.reduce(
-        (soma,item)=>soma + item.quantidade,
-        0
-    );
+                <div class="category-card">
+                    🔧
+                    <strong>Freios</strong>
+                    <small>
+                        Pastilhas, discos e mais
+                    </small>
+                </div>
 
-    document.getElementById("cartCount").textContent = total;
+                <div class="category-card">
+                    ⚙️
+                    <strong>Suspensão</strong>
+                    <small>
+                        Amortecedores e componentes
+                    </small>
+                </div>
 
-}
+                <div class="category-card">
+                    🛢️
+                    <strong>Óleos e filtros</strong>
+                    <small>
+                        Lubrificação e manutenção
+                    </small>
+                </div>
 
+                <div class="category-card">
+                    💡
+                    <strong>Elétrica</strong>
+                    <small>
+                        Lâmpadas e componentes
+                    </small>
+                </div>
 
-/* =========================
-   ABRIR CARRINHO
-========================= */
+            </div>
 
-function openCart(){
-
-    document.getElementById("modalTitle").textContent =
-    "Seu carrinho";
-
-    const body =
-    document.getElementById("modalBody");
-
-
-    if(carrinho.length === 0){
-
-        body.innerHTML = `
-
-            <p style="color:#64748b">
-                Seu carrinho está vazio.
-            </p>
-
-        `;
-
-        document
-        .getElementById("modal")
-        .classList.add("active");
-
-        return;
-    }
+        </section>
 
 
-    body.innerHTML = `
+        <!-- PRODUTOS -->
+        <section class="section">
 
-        <div class="cart-list">
+            <div class="section-header">
 
-            ${
-                carrinho.map((item,posicao)=>{
+                <div>
+                    <h2>Produtos em destaque</h2>
 
-                    const produto =
-                    produtos[item.index];
+                    <p>
+                        Escolha suas peças e adicione ao carrinho.
+                    </p>
+                </div>
 
-                    return `
+            </div>
 
-                    <div class="cart-item">
+            <div
+                class="products-grid"
+                id="products">
+            </div>
 
-                        <div>
+        </section>
 
-                            <b>
-                                ${produto[0]}
-                            </b>
 
-                            <br>
+        <!-- SERVIÇOS -->
+        <section class="section" id="servicos">
 
-                            <small>
-                                ${produto[2]}
-                            </small>
+            <div class="section-header">
 
-                        </div>
+                <div>
+                    <h2>Serviços automotivos</h2>
 
-                        <div class="quantity">
+                    <p>
+                        Mão de obra para cuidar do seu veículo.
+                    </p>
+                </div>
 
-                            <button
-                                onclick="alterarQuantidade(${posicao},-1)"
-                            >
-                                −
-                            </button>
+            </div>
 
-                            <b>
-                                ${item.quantidade}
-                            </b>
 
-                            <button
-                                onclick="alterarQuantidade(${posicao},1)"
-                            >
-                                +
-                            </button>
+            <div class="services-grid">
 
-                        </div>
-
+                <div class="service-card">
+                    <div class="service-icon">
+                        🔧
                     </div>
 
-                    `;
+                    <h3>
+                        Freios
+                    </h3>
 
-                }).join("")
-            }
+                    <p>
+                        Manutenção e substituição de componentes.
+                    </p>
+                </div>
 
-        </div>
 
-        <br>
+                <div class="service-card">
+                    <div class="service-icon">
+                        ⚙️
+                    </div>
 
-        <button
-            class="whatsapp-button"
-            onclick="enviarCarrinhoWhatsApp()"
-        >
-            Finalizar pelo WhatsApp
-        </button>
+                    <h3>
+                        Suspensão
+                    </h3>
 
-    `;
+                    <p>
+                        Verificação e manutenção do sistema.
+                    </p>
+                </div>
 
 
-    document
-    .getElementById("modal")
-    .classList.add("active");
+                <div class="service-card">
+                    <div class="service-icon">
+                        🛢️
+                    </div>
 
-}
+                    <h3>
+                        Troca de óleo
+                    </h3>
 
+                    <p>
+                        Óleo e filtros para manutenção preventiva.
+                    </p>
+                </div>
 
-function alterarQuantidade(posicao,valor){
 
-    const item =
-    carrinho[posicao];
+                <div class="service-card">
+                    <div class="service-icon">
+                        🔍
+                    </div>
 
-    item.quantidade += valor;
+                    <h3>
+                        Diagnóstico
+                    </h3>
 
-    if(item.quantidade <= 0){
+                    <p>
+                        Avaliação para identificar problemas no veículo.
+                    </p>
+                </div>
 
-        carrinho.splice(posicao,1);
+            </div>
 
-    }
+        </section>
 
-    atualizarContador();
 
-    openCart();
+        <!-- ORÇAMENTO -->
+        <section class="section" id="orcamento">
 
-}
-
-
-/* =========================
-   WHATSAPP DO CARRINHO
-========================= */
-
-function enviarCarrinhoWhatsApp(){
-
-    let mensagem =
-    "Olá! Gostaria de solicitar um orçamento/compra das seguintes peças:\n\n";
-
-
-    carrinho.forEach(item=>{
-
-        const produto =
-        produtos[item.index];
-
-        mensagem +=
-        "• " +
-        produto[0] +
-        " — " +
-        item.quantidade +
-        " unidade(s)\n";
-
-    });
-
-
-    mensagem +=
-    "\nGostaria de confirmar disponibilidade e valor.";
-
-
-    const url =
-    "https://wa.me/" +
-    WHATSAPP +
-    "?text=" +
-    encodeURIComponent(mensagem);
-
-
-    window.open(url,"_blank");
-
-}
-
-
-/* =========================
-   ORÇAMENTO
-========================= */
-
-function openBudget(){
-
-    document.getElementById("modalTitle").textContent =
-    "Solicitar orçamento";
-
-
-    document.getElementById("modalBody").innerHTML = `
-
-        <div class="field">
-
-            <label>
-                Seu nome
-            </label>
-
-            <input
-                id="nome"
-                placeholder="Digite seu nome"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Modelo do carro
-            </label>
-
-            <input
-                id="carro"
-                placeholder="Ex.: Chevrolet Onix 1.0"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Ano
-            </label>
-
-            <input
-                id="ano"
-                placeholder="Ex.: 2022"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                O que você precisa?
-            </label>
-
-            <textarea
-                id="necessidade"
-                placeholder="Ex.: Troca de pastilhas de freio..."
-            ></textarea>
-
-        </div>
-
-
-        <button
-            class="whatsapp-button"
-            onclick="enviarOrcamento()"
-        >
-            Enviar orçamento pelo WhatsApp
-        </button>
-
-    `;
-
-
-    document
-    .getElementById("modal")
-    .classList.add("active");
-
-}
-
-
-function enviarOrcamento(){
-
-    const nome =
-    document.getElementById("nome").value.trim();
-
-    const carro =
-    document.getElementById("carro").value.trim();
-
-    const ano =
-    document.getElementById("ano").value.trim();
-
-    const necessidade =
-    document.getElementById("necessidade").value.trim();
-
-
-    if(!nome || !carro || !ano || !necessidade){
-
-        alert("Preencha todos os campos.");
-
-        return;
-    }
-
-
-    const mensagem =
-
-`Olá! Gostaria de solicitar um orçamento.
-
-Nome: ${nome}
-Veículo: ${carro}
-Ano: ${ano}
-Solicitação: ${necessidade}
-
-Aguardo o orçamento. Obrigado!`;
-
-
-    const url =
-    "https://wa.me/" +
-    WHATSAPP +
-    "?text=" +
-    encodeURIComponent(mensagem);
-
-
-    window.open(url,"_blank");
-
-}
-
-
-/* =========================
-   PAINEL ADMINISTRATIVO
-========================= */
-
-function openAdmin(){
-
-    document.getElementById("modalTitle").textContent =
-    "Painel administrativo";
-
-
-    document.getElementById("modalBody").innerHTML = `
-
-        <p style="color:#64748b;margin-bottom:20px">
-
-            Gerencie os produtos e o estoque da loja.
-
-        </p>
-
-
-        <h3>
-            Cadastrar novo produto
-        </h3>
-
-
-        <div class="field">
-
-            <label>
-                Nome do produto
-            </label>
-
-            <input
-                id="adminNome"
-                placeholder="Ex.: Pastilha de freio"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Categoria
-            </label>
-
-            <input
-                id="adminCategoria"
-                placeholder="Ex.: Freios"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Preço
-            </label>
-
-            <input
-                id="adminPreco"
-                placeholder="Ex.: R$ 149,90"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Ícone
-            </label>
-
-            <input
-                id="adminIcone"
-                value="🔧"
-            >
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Estoque inicial
-            </label>
-
-            <input
-                id="adminEstoque"
-                type="number"
-                min="0"
-                value="1"
-            >
-
-        </div>
-
-
-        <button
-            class="primary"
-            style="width:100%"
-            onclick="cadastrarProduto()"
-        >
-            + Cadastrar produto
-        </button>
-
-
-        <hr style="margin:25px 0;border:0;border-top:1px solid #e2e8f0">
-
-
-        <h3>
-            Produtos cadastrados
-        </h3>
-
-
-        <div id="adminProducts"></div>
-
-    `;
-
-
-    document
-    .getElementById("modal")
-    .classList.add("active");
-
-
-    renderAdmin();
-
-}
-
-
-/* =========================
-   LISTA DO ADMIN
-========================= */
-
-function renderAdmin(){
-
-    const container =
-    document.getElementById("adminProducts");
-
-
-    if(!container){
-        return;
-    }
-
-
-    if(produtos.length === 0){
-
-        container.innerHTML =
-        "<p>Nenhum produto cadastrado.</p>";
-
-        return;
-    }
-
-
-    container.innerHTML =
-
-    produtos.map((produto,index)=>{
-
-        return `
-
-        <div class="admin-product">
-
-            <div class="admin-product-top">
+            <div class="budget-section">
 
                 <div>
 
-                    <b>
-                        ${produto[0]}
-                    </b>
+                    <div class="eyebrow">
+                        ORÇAMENTO
+                    </div>
 
-                    <br>
+                    <h2>
+                        Peça seu orçamento
+                        sem complicação.
+                    </h2>
 
-                    <small>
-                        ${produto[1]} · ${produto[2]}
-                    </small>
+                    <p>
+                        Preencha os dados do veículo e diga o que
+                        você precisa. O WhatsApp será aberto com
+                        tudo organizado para facilitar o atendimento.
+                    </p>
+
+                </div>
+
+
+                <div class="budget-button-area">
+
+                    <button
+                        class="btn-primary"
+                        onclick="openBudget()">
+
+                        Solicitar orçamento pelo WhatsApp →
+
+                    </button>
 
                 </div>
 
             </div>
 
+        </section>
 
-            <div class="admin-controls">
+
+        <!-- CONTATO -->
+        <section class="section" id="contato">
+
+            <div class="contact-card">
+
+                <div class="eyebrow">
+                    ASSIS AUTOPEÇAS E SERVIÇOS
+                </div>
+
+                <h2>
+                    Atendimento direto pelo WhatsApp
+                </h2>
+
+                <p>
+                    Use o site para escolher suas peças ou
+                    solicitar um serviço. O fechamento do
+                    atendimento acontece diretamente com a equipe.
+                </p>
+
+                <div class="contact-actions">
+
+                    <a
+                        href="https://wa.me/5541999141210"
+                        target="_blank"
+                        class="btn-primary">
+
+                        Falar no WhatsApp
+
+                    </a>
+
+                    <button
+                        class="btn-secondary"
+                        onclick="openAdmin()">
+
+                        ⚙️ Área administrativa
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        ASSIS AUTOPEÇAS E SERVIÇOS
+
+        <span>·</span>
+
+        Peças e mão de obra para o seu veículo
+
+    </footer>
+
+
+    <!-- MODAL -->
+    <div
+        class="modal"
+        id="modal">
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h2 id="modalTitle">
+                    Solicitar orçamento
+                </h2>
 
                 <button
-                    onclick="alterarEstoque(${index},-1)"
-                >
-                    −
-                </button>
+                    class="close-button"
+                    onclick="closeModal()">
 
+                    ✕
 
-                <b>
-                    Estoque: ${produto[4] || 0}
-                </b>
-
-
-                <button
-                    onclick="alterarEstoque(${index},1)"
-                >
-                    +
-                </button>
-
-
-                <button
-                    class="delete"
-                    onclick="removerProduto(${index})"
-                >
-                    🗑️ Excluir
                 </button>
 
             </div>
 
+            <div id="modalBody"></div>
+
         </div>
 
-        `;
-
-    }).join("");
-
-}
+    </div>
 
 
-/* =========================
-   CADASTRAR PRODUTO
-========================= */
-
-function cadastrarProduto(){
-
-    const nome =
-    document.getElementById("adminNome").value.trim();
-
-    const categoria =
-    document.getElementById("adminCategoria").value.trim();
-
-    const preco =
-    document.getElementById("adminPreco").value.trim();
-
-    const icone =
-    document.getElementById("adminIcone").value.trim() ||
-    "🔧";
-
-    const estoque =
-    Number(
-        document.getElementById("adminEstoque").value
-    );
-
-
-    if(
-        !nome ||
-        !categoria ||
-        !preco ||
-        estoque < 0
-    ){
-
-        alert(
-            "Preencha nome, categoria, preço e estoque."
-        );
-
-        return;
-    }
-
-
-    produtos.push([
-        nome,
-        categoria,
-        preco,
-        icone,
-        estoque
-    ]);
-
-
-    salvarProdutos();
-
-    alert("Produto cadastrado com sucesso!");
-
-
-    openAdmin();
-
-}
-
-
-/* =========================
-   ALTERAR ESTOQUE
-========================= */
-
-function alterarEstoque(index,valor){
-
-    produtos[index][4] =
-    Math.max(
-        0,
-        (produtos[index][4] || 0) + valor
-    );
-
-
-    salvarProdutos();
-
-    openAdmin();
-
-}
-
-
-/* =========================
-   REMOVER PRODUTO
-========================= */
-
-function removerProduto(index){
-
-    const confirmar =
-    confirm(
-        "Tem certeza que deseja excluir este produto?"
-    );
-
-
-    if(!confirmar){
-        return;
-    }
-
-
-    produtos.splice(index,1);
-
-
-    salvarProdutos();
-
-    alert("Produto removido.");
-
-    openAdmin();
-
-}
-
-
-/* =========================
-   SALVAR
-========================= */
-
-function salvarProdutos(){
-
-    localStorage.setItem(
-        "assis_produtos",
-        JSON.stringify(produtos)
-    );
-
-
-    renderProdutos();
-
-}
-
-
-/* =========================
-   FECHAR MODAL
-========================= */
-
-function closeModal(){
-
-    document
-    .getElementById("modal")
-    .classList.remove("active");
-
-}
-
-
-/* =========================
-   INICIALIZAR
-========================= */
-
-renderProdutos();
-
-</script>
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
 
 </body>
 </html>
