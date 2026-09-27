@@ -14,7 +14,6 @@ const WHATSAPP =
 const ADMIN_ID =
     "fe380b01-d59d-45c6-900c-cfd8cfd0234f";
 
-
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
@@ -235,10 +234,6 @@ function render() {
 ========================================================= */
 
 function add(index) {
-
-    const produto =
-        products[index];
-
 
     const itemExistente =
         cart.find(
@@ -1258,9 +1253,37 @@ async function alterarEstoque(
     }
 
 
-    await carregarProdutosSupabase();
+    /*
+       Atualiza somente o produto alterado.
+       Não reconstrói o painel inteiro.
+    */
 
-    openAdminPanel();
+    const produto =
+        products.find(
+            product => String(product[5]) === String(id)
+        );
+
+
+    if (produto) {
+
+        produto[4] =
+            novoEstoque;
+
+    }
+
+
+    const elementoEstoque =
+        document.querySelector(
+            `[data-estoque-id="${id}"]`
+        );
+
+
+    if (elementoEstoque) {
+
+        elementoEstoque.textContent =
+            `Estoque: ${novoEstoque}`;
+
+    }
 
 }
 
@@ -1420,7 +1443,9 @@ function renderAdmin() {
                             </button>
 
 
-                            <b>
+                            <b
+                                data-estoque-id="${id}"
+                            >
                                 Estoque: ${stock}
                             </b>
 
