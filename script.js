@@ -6,7 +6,7 @@
 /*
     COLE AQUI A PROJECT URL DO SUPABASE
 */
-const SUPABASE_URL = https://efnajcayxuxubpdljsqw.supabase.co;
+const SUPABASE_URL = "https://efnajcayxuxubpdljsqw.supabase.co";
 
 
 /*
